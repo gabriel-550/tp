@@ -4,8 +4,6 @@ import seedu.tutorswift.command.Command;
 import seedu.tutorswift.command.EditCommand;
 import seedu.tutorswift.command.ExitCommand;
 
-import java.text.ParseException;
-
 /**
  * This class contains the logic to interpret strings and return the
  * appropriate {@link Command} objects.

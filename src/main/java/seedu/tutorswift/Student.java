@@ -43,9 +43,15 @@ public class Student {
     }
 
     public void editStudent(String name, String subject, String academicLevel) {
-        if (name != null) this.name = name;
-        if (subject != null) this.subject = subject;
-        if (academicLevel != null) this.academicLevel = academicLevel;
+        if (name != null) {
+            this.name = name;
+        }
+        if (subject != null) {
+            this.subject = subject;
+        }
+        if (academicLevel != null) {
+            this.academicLevel = academicLevel;
+        }
     }
 
 }
