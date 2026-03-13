@@ -1,9 +1,11 @@
 Hello from
- ____        _        
-|  _ \ _   _| | _____ 
-| | | | | | | |/ / _ \
-| |_| | |_| |   <  __/
-|____/ \__,_|_|\_\___|
+         __...--~~~~~-._   _.-~~~~~--...__
+      //               `V'               \\
+     //                 |                 \\
+    //__...--~~~~~~-._  |  _.-~~~~~~--...__\\
+   //__.....----~~~~._\ | /_.~~~~----.....__\\
+  ======================\\|//====================
+                       `---'
 
-What is your name?
-Hello James Gosling
+Welcome to TutorSwift! Manage your students efficiently.How can I help you?
+Goodbye! Thanks for using TutorSwift.
