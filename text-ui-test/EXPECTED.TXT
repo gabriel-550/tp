@@ -4,7 +4,8 @@ Hello from
      //                 |                 \\
     //__...--~~~~~~-._  |  _.-~~~~~~--...__\\
    //__.....----~~~~._\ | /_.~~~~----.....__\\
-  ======================\|//====================
+  ======================\\|//====================
                        `---'
 
 Welcome to TutorSwift! Manage your students efficiently.How can I help you?
+Goodbye! Thanks for using TutorSwift.
