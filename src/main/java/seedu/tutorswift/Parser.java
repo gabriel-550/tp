@@ -3,6 +3,7 @@ package seedu.tutorswift;
 import seedu.tutorswift.command.Command;
 import seedu.tutorswift.command.EditCommand;
 import seedu.tutorswift.command.ExitCommand;
+import seedu.tutorswift.command.AddCommand;
 
 /**
  * This class contains the logic to interpret strings and return the
@@ -27,6 +28,8 @@ public class Parser {
             return parseEdit(arguments);
         case "bye":
             return new ExitCommand();
+        case "add":
+            return parseAdd(arguments);
         default:
             throw new TutorSwiftException("I'm sorry, but I don't know what '" + userInput + "' means :(\n");
         }
@@ -67,7 +70,29 @@ public class Parser {
 
         return new EditCommand(index, name, level, subject);
     }
+    /**
+     * Parses the arguments for the "add" command.
+     *
+     * @param args The raw argument string from the user.
+     * @return An {@code AddCommand} containing the new student details.
+     * @throws TutorSwiftException If any required parameters (n/, l/, s/) are missing.
+     */
+    private static Command parseAdd(String args) throws TutorSwiftException {
+        if (args.isEmpty()) {
+            throw new TutorSwiftException("The add command must have name (n/), level (l/), and subject (s/)!");
+        }
 
+        String name = getValueByPrefix(args, "n/");
+        String level = getValueByPrefix(args, "l/");
+        String subject = getValueByPrefix(args, "s/");
+
+        if (name == null || level == null || subject == null) {
+            throw new TutorSwiftException("Missing parameters! Usage: add n/NAME l/LEVEL s/SUBJECT");
+        }
+
+        Student newStudent = new Student(name, subject, level);
+        return new AddCommand(newStudent);
+    }
     private static String getValueByPrefix(String args, String prefix) {
         if (!args.contains(prefix)) {
             return null;
