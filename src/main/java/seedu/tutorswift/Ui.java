@@ -70,6 +70,30 @@ public class Ui {
     }
 
     /**
+     * Displays all students currently in the list.
+     *
+     * @param students The list of students to display.
+     */
+    public void showStudentList(StudentList students) {
+        System.out.println("____________________________________________________________");
+
+        if (students.getSize() == 0) {
+            System.out.println("There are currently no students.");
+        } else {
+            System.out.println("Here are the students in your list:");
+            for (int i = 0; i < students.getSize(); i++) {
+                Student student = students.getStudent(i);
+                System.out.println((i + 1) + ". "
+                        + student.getName() + " | "
+                        + student.getAcademicLevel() + " | "
+                        + student.getSubject());
+            }
+        }
+
+        System.out.println("____________________________________________________________");
+    }
+
+    /**
      * Shows the exit message when the program ends.
      */
     public void showExit() {

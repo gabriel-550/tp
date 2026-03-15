@@ -54,4 +54,17 @@ public class Student {
         }
     }
 
+    /**
+     * Returns a string representation of the student in the format:
+     * "name | academic level | subject".
+     *
+     * This is used for displaying the student in the UI.
+     *
+     * @return a formatted string representing the student
+     */
+    @Override
+    public String toString() {
+        return name + " | " + academicLevel + " | " + subject;
+    }
+
 }

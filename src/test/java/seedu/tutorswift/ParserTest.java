@@ -23,4 +23,16 @@ public class ParserTest {
     public void parseUserInput_nonIntegerDeleteIndex_throwsTutorSwiftException() {
         assertThrows(TutorSwiftException.class, () -> Parser.parseUserInput("delete abc"));
     }
+
+    @Test
+    public void parseUserInput_list_returnsListCommand() throws TutorSwiftException {
+        Command result = Parser.parseUserInput("list");
+        assertInstanceOf(seedu.tutorswift.command.ListCommand.class, result);
+    }
+
+    @Test
+    public void parseUserInput_listWithSpaces_returnsListCommand() throws TutorSwiftException {
+        Command result = Parser.parseUserInput("   list   ");
+        assertInstanceOf(seedu.tutorswift.command.ListCommand.class, result);
+    }
 }

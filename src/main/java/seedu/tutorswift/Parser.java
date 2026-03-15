@@ -4,6 +4,7 @@ import seedu.tutorswift.command.Command;
 import seedu.tutorswift.command.EditCommand;
 import seedu.tutorswift.command.ExitCommand;
 import seedu.tutorswift.command.DeleteCommand;
+import seedu.tutorswift.command.ListCommand;
 
 /**
  * This class contains the logic to interpret strings and return the
@@ -28,6 +29,8 @@ public class Parser {
             return parseEdit(arguments);
         case "delete":
             return parseDelete(arguments);
+        case "list":
+            return new ListCommand();
         case "bye":
             return new ExitCommand();
         default:
@@ -117,4 +120,5 @@ public class Parser {
 
         return new DeleteCommand(index);
     }
+
 }
