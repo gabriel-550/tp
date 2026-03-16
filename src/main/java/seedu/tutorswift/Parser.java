@@ -27,7 +27,7 @@ public class Parser {
     public static Command parseUserInput(String userInput)  throws TutorSwiftException {
         if (userInput.trim().isEmpty()) {
             throw new TutorSwiftException("Please enter a command."
-                    + "Available commands: add, edit, delete, list, exit");
+                    + " Here are the available commands: add, edit, delete, list, exit.");
         }
 
         String[] parts = userInput.trim().split(" ", 2);
@@ -74,6 +74,10 @@ public class Parser {
                     + " Please provide a numeric index.");
         }
 
+        if (index <= 0) {
+            throw new TutorSwiftException("The index must be a positive integer.");
+        }
+
         // Check that values are not just whitespaces
         String remainingArgs = parts.length > 1 ? " " + parts[1] : "";
 
@@ -84,8 +88,7 @@ public class Parser {
 
         // At least one field must be edited
         if (name == null && level == null && subject == null) {
-            throw new TutorSwiftException("You must provide at least one field to edit: "
-                    + "name (n/), level (l/), or subject (s/).");
+            throw new TutorSwiftException("Name (n/), level (l/), or subject (s/) cannot be empty");
         }
         assert (name != null || level != null || subject != null) : "name, level or subject field should not be null.";
 
