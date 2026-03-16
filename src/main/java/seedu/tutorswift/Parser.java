@@ -23,9 +23,13 @@ public class Parser {
      *
      * @param userInput The raw input string from the user.
      * @return A {@link Command} object ready for execution.
-     *
      */
     public static Command parseUserInput(String userInput)  throws TutorSwiftException {
+        if (userInput.trim().isEmpty()) {
+            throw new TutorSwiftException("Please enter a command."
+                    + "Available commands: add, edit, delete, list, exit");
+        }
+
         String[] parts = userInput.trim().split(" ", 2);
         String commandName = parts[0].toLowerCase();
         String arguments = parts.length > 1 ? parts[1] : "";
@@ -54,33 +58,40 @@ public class Parser {
      * @return An {@code EditCommand} with index, name , level, subject.
      */
     private static Command parseEdit(String args) throws TutorSwiftException {
+        assert args != null : "Parser should not receive a null string from readUserInput";
         if (args.isEmpty()) {
-            throw new TutorSwiftException("Edit command requires an index!");
+            throw new TutorSwiftException("Edit command requires an index!"
+                    + " Usage: edit INDEX n/NAME l/LEVEL s/SUBJECT");
         }
 
-        // 1. Extract the index (the first number before any prefixes)
+        // Extract the index (the first number before any prefixes)
         String[] parts = args.trim().split("\\s+", 2);
         int index;
         try {
             index = Integer.parseInt(parts[0]);
         } catch (NumberFormatException e) {
-            throw new TutorSwiftException("The index must be a positive integer.");
+            throw new TutorSwiftException("'" + parts[0] + "' is not a valid number."
+                    + " Please provide a numeric index.");
         }
 
+        // Check that values are not just whitespaces
         String remainingArgs = parts.length > 1 ? " " + parts[1] : "";
 
-        // 2. Extract values based on prefixes
+        // Extract values based on prefixes
         String name = getValueByPrefix(remainingArgs, PREFIX_NAME);
         String level = getValueByPrefix(remainingArgs, PREFIX_LEVEL);
         String subject = getValueByPrefix(remainingArgs, PREFIX_SUBJECT);
 
-        // 3. Validation: At least one field must be edited
+        // At least one field must be edited
         if (name == null && level == null && subject == null) {
-            throw new TutorSwiftException("At least one field to edit must be provided (n/, l/, or s/).");
+            throw new TutorSwiftException("You must provide at least one field to edit: "
+                    + "name (n/), level (l/), or subject (s/).");
         }
+        assert (name != null || level != null || subject != null) : "name, level or subject field should not be null.";
 
         return new EditCommand(index, name, level, subject);
     }
+
     /**
      * Parses the arguments for the "add" command.
      *
@@ -104,6 +115,7 @@ public class Parser {
         Student newStudent = new Student(name, level, subject);
         return new AddCommand(newStudent);
     }
+
     private static String getValueByPrefix(String args, String prefix) {
         if (!args.contains(prefix)) {
             return null;
