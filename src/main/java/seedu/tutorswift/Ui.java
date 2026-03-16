@@ -7,6 +7,20 @@ import java.util.Scanner;
  */
 public class Ui {
 
+    private static final String LOGO = ""
+            + "         __...--~~~~~-._   _.-~~~~~--...__\n"
+            + "      //               `V'               \\\\\n"
+            + "     //                 |                 \\\\\n"
+            + "    //__...--~~~~~~-._  |  _.-~~~~~~--...__\\\\\n"
+            + "   //__.....----~~~~._\\ | /_.~~~~----.....__\\\\\n"
+            + "  ======================\\\\|//====================\n"
+            + "                       `---'\n";
+    private static final String WELCOME_MESSAGE = "Welcome to TutorSwift! We'll help you manage your students efficiently!\n"
+            + "How can I help you?";
+    private static final String LINE_DIVIDER = "____________________________________________________________";
+    private static final String EXIT_MESSAGE = "Goodbye! Thanks for using TutorSwift.";
+    public static final String INDENT = "   ";
+
     private final Scanner scanner;
 
     public Ui() {
@@ -16,20 +30,11 @@ public class Ui {
      * Shows the welcome message when the program starts.
      */
     public void showWelcome() {
-        String logo = ""
-                + "         __...--~~~~~-._   _.-~~~~~--...__\n"
-                + "      //               `V'               \\\\\n"
-                + "     //                 |                 \\\\\n"
-                + "    //__...--~~~~~~-._  |  _.-~~~~~~--...__\\\\\n"
-                + "   //__.....----~~~~._\\ | /_.~~~~----.....__\\\\\n"
-                + "  ======================\\\\|//====================\n"
-                + "                       `---'\n";
-        System.out.println("Hello from\n" + logo);
-        System.out.println("Welcome to TutorSwift! Manage your students efficiently." +
-                "How can I help you?");
+        System.out.println(LOGO);
+        System.out.println(WELCOME_MESSAGE);
     }
 
-    public String readCommand() {
+    public String readUserInput() {
         if (scanner.hasNextLine()) {
             return scanner.nextLine();
         } else {
@@ -38,21 +43,31 @@ public class Ui {
     }
 
     /**
+     * Helper method to print formatted student details.
+     *
+     * @param student The student object to print
+     */
+    private void printStudentDetails(Student student) {
+        assert student != null : "student should not be null";
+        System.out.println(INDENT + student.toString());
+    }
+
+    /**
      * Shows that edit was successful and show updated student details.
      *
      * @param updatedStudent The student that was just edited.
      */
     public void showEditSuccess(Student updatedStudent) {
-        System.out.println("____________________________________________________________");
+        System.out.println(LINE_DIVIDER);
         System.out.println(" Done! I've updated the details for this student:");
-        System.out.println("   " + updatedStudent.getName() + " | " +
-                updatedStudent.getAcademicLevel() + " | " +
-                updatedStudent.getSubject());
-        System.out.println("____________________________________________________________");
+        printStudentDetails(updatedStudent);
+        System.out.println(LINE_DIVIDER);
     }
 
     public void showError(String error) {
+        System.out.println(LINE_DIVIDER);
         System.out.println(error);
+        System.out.println(LINE_DIVIDER);
     }
 
     /**
@@ -62,13 +77,11 @@ public class Ui {
      * @param totalStudents The total number of students currently in the list.
      */
     public void showAddSuccess(Student student, int totalStudents) {
-        System.out.println("____________________________________________________________");
+        System.out.println(LINE_DIVIDER);
         System.out.println(" Got it. I've added this student:");
-        System.out.println("   " + student.getName() + " | " +
-                student.getAcademicLevel() + " | " +
-                student.getSubject());
+        printStudentDetails(student);
         System.out.println(" Now you have " + totalStudents + " students in the list.");
-        System.out.println("____________________________________________________________");
+        System.out.println(LINE_DIVIDER);
     }
     /**
      * Shows that deletion was successful and shows the removed student details.
@@ -76,12 +89,10 @@ public class Ui {
      * @param deletedStudent The student that was just deleted.
      */
     public void showDeleteSuccess(Student deletedStudent) {
-        System.out.println("____________________________________________________________");
+        System.out.println(LINE_DIVIDER);
         System.out.println(" Done! I've removed this student:");
-        System.out.println("   " + deletedStudent.getName() + " | " +
-                deletedStudent.getAcademicLevel() + " | " +
-                deletedStudent.getSubject());
-        System.out.println("____________________________________________________________");
+        printStudentDetails(deletedStudent);
+        System.out.println(LINE_DIVIDER);
     }
 
     /**
@@ -90,7 +101,7 @@ public class Ui {
      * @param students The list of students to display.
      */
     public void showStudentList(StudentList students) {
-        System.out.println("____________________________________________________________");
+        System.out.println(LINE_DIVIDER);
 
         if (students.getSize() == 0) {
             System.out.println("There are currently no students.");
@@ -98,21 +109,19 @@ public class Ui {
             System.out.println("Here are the students in your list:");
             for (int i = 0; i < students.getSize(); i++) {
                 Student student = students.getStudent(i);
-                System.out.println((i + 1) + ". "
-                        + student.getName() + " | "
-                        + student.getAcademicLevel() + " | "
-                        + student.getSubject());
+                System.out.print((i + 1) + ". ");
+                printStudentDetails(student);
             }
         }
 
-        System.out.println("____________________________________________________________");
+        System.out.println(LINE_DIVIDER);
     }
 
     /**
      * Shows the exit message when the program ends.
      */
     public void showExit() {
-        System.out.println("Goodbye! Thanks for using TutorSwift.");
+        System.out.println(EXIT_MESSAGE);
     }
 
     public void close() {
