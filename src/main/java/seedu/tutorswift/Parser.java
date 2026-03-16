@@ -13,6 +13,11 @@ import seedu.tutorswift.command.AddCommand;
  */
 public class Parser {
 
+    private static final String PREFIX_NAME = "n/";
+    private static final String PREFIX_LEVEL = "l/";
+    private static final String PREFIX_SUBJECT = "s/";
+    private static final String[] ALL_PREFIXES = {PREFIX_NAME, PREFIX_LEVEL, PREFIX_SUBJECT};
+
     /**
      * Parses the full user input string and returns the corresponding command.
      *
@@ -65,9 +70,9 @@ public class Parser {
         String remainingArgs = parts.length > 1 ? " " + parts[1] : "";
 
         // 2. Extract values based on prefixes
-        String name = getValueByPrefix(remainingArgs, "n/");
-        String level = getValueByPrefix(remainingArgs, "l/");
-        String subject = getValueByPrefix(remainingArgs, "s/");
+        String name = getValueByPrefix(remainingArgs, PREFIX_NAME);
+        String level = getValueByPrefix(remainingArgs, PREFIX_LEVEL);
+        String subject = getValueByPrefix(remainingArgs, PREFIX_SUBJECT);
 
         // 3. Validation: At least one field must be edited
         if (name == null && level == null && subject == null) {
@@ -88,9 +93,9 @@ public class Parser {
             throw new TutorSwiftException("The add command must have name (n/), level (l/), and subject (s/)!");
         }
 
-        String name = getValueByPrefix(args, "n/");
-        String level = getValueByPrefix(args, "l/");
-        String subject = getValueByPrefix(args, "s/");
+        String name = getValueByPrefix(args, PREFIX_NAME);
+        String level = getValueByPrefix(args, PREFIX_LEVEL);
+        String subject = getValueByPrefix(args, PREFIX_SUBJECT);
 
         if (name == null || level == null || subject == null) {
             throw new TutorSwiftException("Missing parameters! Usage: add n/NAME l/LEVEL s/SUBJECT");
@@ -107,8 +112,7 @@ public class Parser {
         int endIndex = args.length();
 
         // Check if there's another prefix after this one to determine the end
-        String[] allPrefixes = {"n/", "l/", "s/"};
-        for (String p : allPrefixes) {
+        for (String p : ALL_PREFIXES) {
             int nextPrefixIndex = args.indexOf(p, startIndex);
             if (nextPrefixIndex != -1 && nextPrefixIndex < endIndex) {
                 endIndex = nextPrefixIndex;
