@@ -19,7 +19,7 @@ public class TutorSwift {
         boolean isExit = false;
         while (!isExit) {
             try {
-                String userInput = ui.readCommand();
+                String userInput = ui.readUserInput();
 
                 // Parse user input into command object to determine command name
                 Command c = Parser.parseUserInput(userInput);
