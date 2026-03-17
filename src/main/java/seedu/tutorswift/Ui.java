@@ -89,10 +89,11 @@ public class Ui {
      *
      * @param deletedStudent The student that was just deleted.
      */
-    public void showDeleteSuccess(Student deletedStudent) {
+    public void showDeleteSuccess(Student deletedStudent, int totalStudents) {
         System.out.println(LINE_DIVIDER);
         System.out.println(" Done! I've removed this student:");
         printStudentDetails(deletedStudent);
+        System.out.println(" Now you have " + totalStudents + " students in the list.");
         System.out.println(LINE_DIVIDER);
     }
 

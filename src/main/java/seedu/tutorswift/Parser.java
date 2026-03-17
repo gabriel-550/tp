@@ -146,6 +146,7 @@ public class Parser {
      * @throws TutorSwiftException If the index is missing or not a valid positive integer.
      */
     private static Command parseDelete(String args) throws TutorSwiftException {
+        assert args != null : "Parser should not receive a null string from readUserInput";
         if (args.isEmpty()) {
             throw new TutorSwiftException("Delete command requires an index!");
         }
