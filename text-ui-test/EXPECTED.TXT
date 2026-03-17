@@ -9,13 +9,40 @@
 Welcome to TutorSwift! We'll help you manage your students efficiently!
 How can I help you?
 ____________________________________________________________
+I'm sorry, but I don't know what 'test' means :(
+
+____________________________________________________________
+____________________________________________________________
  Got it. I've added this student:
-    Alex Tan | Secondary 3 | Mathematics
+    John Doe | Secondary 2 | Math
  Now you have 1 students in the list.
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this student:
-    Brenda Lim | Primary 6 | English
+    John Tan | Primary 6 | Science
  Now you have 2 students in the list.
+____________________________________________________________
+____________________________________________________________
+Here are the students in your list:
+1. John Doe | Secondary 2 | Math
+2. John Tan | Primary 6 | Science
+____________________________________________________________
+____________________________________________________________
+ Done! I've updated the details for this student:
+    Alex Tan | Primary 6 | English
+____________________________________________________________
+____________________________________________________________
+Here are the students in your list:
+1. John Doe | Secondary 2 | Math
+2. Alex Tan | Primary 6 | English
+____________________________________________________________
+____________________________________________________________
+ Done! I've removed this student:
+    Alex Tan | Primary 6 | English
+ Now you have 1 students in the list.
+____________________________________________________________
+____________________________________________________________
+Here are the students in your list:
+1. John Doe | Secondary 2 | Math
 ____________________________________________________________
 Goodbye! Thanks for using TutorSwift.

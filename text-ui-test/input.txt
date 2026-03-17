@@ -1,3 +1,9 @@
-add n/Alex Tan l/Secondary 3 s/Mathematics
-add n/Brenda Lim l/Primary 6 s/English
+test
+add n/John Doe l/Secondary 2 s/Math
+add n/John Tan l/Primary 6 s/Science
+list
+edit 2 n/Alex Tan s/English
+list
+delete 2
+list
 bye
