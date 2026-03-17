@@ -36,6 +36,6 @@ public class DeleteCommand extends Command {
         }
         Student deletedStudent = students.getStudent(zeroBasedIndex);
         students.deleteStudent(zeroBasedIndex);
-        ui.showDeleteSuccess(deletedStudent);
+        ui.showDeleteSuccess(deletedStudent, students.getSize());
     }
 }
