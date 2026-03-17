@@ -22,7 +22,7 @@ public class StudentList {
     }
 
     public Student getStudent(int studentId) {
-        assert (studentId >= 0 && studentId <= students.size()) : "student index is not in the list";
+        assert (studentId >= 0 && studentId < students.size()) : "student index is not in the list";
         return this.students.get(studentId);
     }
 

@@ -30,11 +30,13 @@ public class DeleteCommand extends Command {
      */
     @Override
     public void execute(StudentList students, Ui ui) throws TutorSwiftException {
+        assert students != null : "StudentList should not be null";
         int zeroBasedIndex = index - 1;
         if (zeroBasedIndex < 0 || zeroBasedIndex >= students.getSize()) {
             throw new TutorSwiftException("Invalid! Please provide a valid index.");
         }
         Student deletedStudent = students.getStudent(zeroBasedIndex);
+        assert deletedStudent != null : "Retrieved student should not be null";
         students.deleteStudent(zeroBasedIndex);
         ui.showDeleteSuccess(deletedStudent, students.getSize());
     }
