@@ -1,5 +1,7 @@
 package seedu.tutorswift;
 
+import java.util.ArrayList;
+
 /**
  * Represents a student with a name, subject, and academic level.
  */
@@ -8,6 +10,7 @@ public class Student {
     private String name;
     private String subject;
     private String academicLevel;
+    private final ArrayList<Lesson> lessons;
 
     /**
      * Creates a student with the given name, subject, and academic level.
@@ -16,6 +19,7 @@ public class Student {
         this.name = name;
         this.academicLevel = academicLevel;
         this.subject = subject;
+        this.lessons = new ArrayList<>();
     }
 
     public String getName() {
@@ -54,6 +58,15 @@ public class Student {
         if (subject != null) {
             this.subject = subject;
         }
+    }
+
+    public void addLesson(Lesson newLesson) throws TutorSwiftException {
+        for (Lesson existingLesson : lessons) {
+            if (existingLesson.isOverlapping(newLesson)) {
+                throw new TutorSwiftException("Schedule conflict! Overlaps with existing lesson: " + existingLesson);
+            }
+        }
+        lessons.add(newLesson);
     }
 
     /**
