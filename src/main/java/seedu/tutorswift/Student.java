@@ -59,7 +59,7 @@ public class Student {
             this.subject = subject;
         }
     }
-// @@author Alex-Chen-666
+    // @@author Alex-Chen-666
     /**
      * Checks if the student is currently archived.
      *
@@ -76,7 +76,7 @@ public class Student {
     public void setArchived(boolean archived) {
         isArchived = archived;
     }
-// @@author
+    // @@author
     /**
      * Returns a string representation of the student in the format:
      * "name | academic level | subject".

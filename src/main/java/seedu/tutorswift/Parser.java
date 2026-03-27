@@ -7,6 +7,9 @@ import seedu.tutorswift.command.DeleteCommand;
 import seedu.tutorswift.command.ListCommand;
 import seedu.tutorswift.command.AddCommand;
 import seedu.tutorswift.command.FindCommand;
+import seedu.tutorswift.command.ArchiveCommand;
+import seedu.tutorswift.command.UnarchiveCommand;
+import seedu.tutorswift.command.ListArchiveCommand;
 
 /**
  * This class contains the logic to interpret strings and return the
@@ -48,8 +51,28 @@ public class Parser {
             return parseAdd(arguments);
         case "find":
             return parseFind(arguments);
+        case "archive":
+            return new ArchiveCommand(parseIndex(arguments));
+        case "unarchive":
+            return new UnarchiveCommand(parseIndex(arguments));
+        case "list-archive":
+            return new ListArchiveCommand();
         default:
             throw new TutorSwiftException("I'm sorry, but I don't know what '" + userInput + "' means :(\n");
+        }
+    }
+
+    /**
+     * Helper to parse and validate index arguments.
+     */
+    private static int parseIndex(String args) throws TutorSwiftException {
+        if (args.trim().isEmpty()) {
+            throw new TutorSwiftException("This command requires a numeric index!");
+        }
+        try {
+            return Integer.parseInt(args.trim());
+        } catch (NumberFormatException e) {
+            throw new TutorSwiftException("Please provide a valid positive integer as index.");
         }
     }
 

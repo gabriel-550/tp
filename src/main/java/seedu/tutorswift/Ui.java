@@ -163,7 +163,7 @@ public class Ui {
         printStudentDetails(student);
         System.out.println(LINE_DIVIDER);
     }
-// @@author
+    // @@author
 
     /**
      * Displays students that match the find criteria.
