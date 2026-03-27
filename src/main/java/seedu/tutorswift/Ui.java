@@ -164,6 +164,21 @@ public class Ui {
         System.out.println(LINE_DIVIDER);
     }
     // @@author
+    // @@author Alex-Chen-666
+    /**
+     * Shows a success message after permanently deleting a student from the archive.
+     *
+     * @param student The archived student who was removed.
+     * @param totalArchived The remaining number of students in the archive.
+     */
+    public void showDeleteArchiveSuccess(Student student, int totalArchived) {
+        System.out.println(LINE_DIVIDER);
+        System.out.println(" [Done] Permanently removed this student from ARCHIVE:");
+        printStudentDetails(student);
+        System.out.println(" Now you have " + totalArchived + " students in your archive.");
+        System.out.println(LINE_DIVIDER);
+    }
+    // @@author
 
     /**
      * Displays students that match the find criteria.

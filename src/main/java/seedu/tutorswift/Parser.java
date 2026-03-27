@@ -10,6 +10,7 @@ import seedu.tutorswift.command.FindCommand;
 import seedu.tutorswift.command.ArchiveCommand;
 import seedu.tutorswift.command.UnarchiveCommand;
 import seedu.tutorswift.command.ListArchiveCommand;
+import seedu.tutorswift.command.DeleteArchiveCommand;
 
 /**
  * This class contains the logic to interpret strings and return the
@@ -57,6 +58,8 @@ public class Parser {
             return new UnarchiveCommand(parseIndex(arguments));
         case "list-archive":
             return new ListArchiveCommand();
+        case "delete-archive":
+            return new DeleteArchiveCommand(parseIndex(arguments));
         default:
             throw new TutorSwiftException("I'm sorry, but I don't know what '" + userInput + "' means :(\n");
         }
