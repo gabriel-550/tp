@@ -29,11 +29,24 @@ Here are the students in your list:
 ____________________________________________________________
 ____________________________________________________________
  Done! I've updated the details for this student:
+    John Doe | Secondary 2 | Math | Grades: [Midterm: 85]
+____________________________________________________________
+____________________________________________________________
+ Done! I've updated the details for this student:
+    John Tan | Primary 6 | Science | Grades: [Final: 92]
+____________________________________________________________
+____________________________________________________________
+Here are the students in your list:
+1. John Doe | Secondary 2 | Math | Grades: [Midterm: 85]
+2. John Tan | Primary 6 | Science | Grades: [Final: 92]
+____________________________________________________________
+____________________________________________________________
+ Done! I've updated the details for this student:
     Alex Tan | Primary 6 | English
 ____________________________________________________________
 ____________________________________________________________
 Here are the students in your list:
-1. John Doe | Secondary 2 | Math
+1. John Doe | Secondary 2 | Math | Grades: [Midterm: 85]
 2. Alex Tan | Primary 6 | English
 ____________________________________________________________
 ____________________________________________________________
@@ -43,6 +56,6 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
 Here are the students in your list:
-1. John Doe | Secondary 2 | Math
+1. John Doe | Secondary 2 | Math | Grades: [Midterm: 85]
 ____________________________________________________________
 Goodbye! Thanks for using TutorSwift.
