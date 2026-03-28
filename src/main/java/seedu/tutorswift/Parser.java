@@ -1,6 +1,14 @@
 package seedu.tutorswift;
 
-import seedu.tutorswift.command.*;
+import seedu.tutorswift.command.Command;
+import seedu.tutorswift.command.EditCommand;
+import seedu.tutorswift.command.ExitCommand;
+import seedu.tutorswift.command.DeleteCommand;
+import seedu.tutorswift.command.ListCommand;
+import seedu.tutorswift.command.AddCommand;
+import seedu.tutorswift.command.FindCommand;
+import seedu.tutorswift.command.ScheduleCommand;
+import seedu.tutorswift.command.GradeCommand;
 
 import java.time.DayOfWeek;
 import java.time.LocalTime;
