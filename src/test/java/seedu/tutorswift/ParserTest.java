@@ -71,7 +71,7 @@ public class ParserTest {
 
     @Test
     public void parseEdit_validAllFields_success() throws TutorSwiftException {
-        String input = "edit 1 n/John l/Sec 4 s/Math";
+        String input = "edit 1 n/John l/Sec 4 sub/Math";
         Command result = Parser.parseUserInput(input);
 
         assertInstanceOf(EditCommand.class, result);
@@ -154,6 +154,6 @@ public class ParserTest {
     @Test
     public void parseUserInput_findEmptyPrefix_throwsException() {
         // Prefix exists but value is blank
-        assertThrows(TutorSwiftException.class, () -> Parser.parseUserInput("find n/  s/ "));
+        assertThrows(TutorSwiftException.class, () -> Parser.parseUserInput("find n/  sub/ "));
     }
 }
