@@ -79,7 +79,7 @@ public class ParserTest {
 
     @Test
     public void parseEdit_singleField_success() throws TutorSwiftException {
-        String input = "edit 2 s/Biology";
+        String input = "edit 2 sub/Biology";
         Command result = Parser.parseUserInput(input);
 
         assertInstanceOf(EditCommand.class, result);
@@ -103,7 +103,7 @@ public class ParserTest {
         // Test providing index but no prefixes
         TutorSwiftException e = assertThrows(TutorSwiftException.class, () ->
                 Parser.parseUserInput("edit 1"));
-        assertTrue(e.getMessage().contains("Name (n/), level (l/), or subject (s/) cannot be empty"));
+        assertTrue(e.getMessage().contains("Name (n/), level (l/), or subject (sub/) cannot be empty"));
     }
 
     @Test
@@ -135,7 +135,7 @@ public class ParserTest {
     @Test
     public void parseUserInput_findMultipleFields_returnsFindCommand() throws TutorSwiftException {
         // "find" command multiple valid prefixes should return a FindCommand
-        Command result = Parser.parseUserInput("find n/John s/Math");
+        Command result = Parser.parseUserInput("find n/John sub/Math");
         assertInstanceOf(seedu.tutorswift.command.FindCommand.class, result);
     }
 
