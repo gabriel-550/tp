@@ -38,7 +38,7 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(1, "Jane Doe", null, null);
         editCommand.execute(students, ui);
 
-        Student editedStudent = students.getStudent(0);
+        Student editedStudent = students.getActiveStudent(0);
         assertEquals("Jane Doe", editedStudent.getName());
         assertEquals("Primary 1", editedStudent.getAcademicLevel());
         assertEquals("Math", editedStudent.getSubject());
@@ -64,7 +64,7 @@ public class EditCommandTest {
         EditCommand editCommand = new EditCommand(1, "Bob", "Secondary 4", "Physics");
         editCommand.execute(students, ui);
 
-        Student editedStudent = students.getStudent(0);
+        Student editedStudent = students.getActiveStudent(0);
         assertEquals("Bob", editedStudent.getName());
         assertEquals("Secondary 4", editedStudent.getAcademicLevel());
         assertEquals("Physics", editedStudent.getSubject());

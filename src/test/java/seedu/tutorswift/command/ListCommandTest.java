@@ -58,6 +58,6 @@ class ListCommandTest {
 
         String output = outContent.toString();
 
-        assertTrue(output.contains("There are currently no students."));
+        assertTrue(output.contains("Your active student list is currently empty."));
     }
 }
