@@ -27,12 +27,12 @@ public class EditCommand extends Command {
         assert students != null : "StudentList should not be null";
 
         // Check if student index is in the list
-        if (studentIndex > students.getSize() || studentIndex < 1) {
+        if (studentIndex > students.getActiveSize() || studentIndex < 1) {
             throw new TutorSwiftException("Index out of bounds!"
-                    + " Use list command to view valid student index.");
+                    + " Use list command to view valid active student index.");
         }
 
-        Student studentToEdit = students.getStudent(studentIndex - 1); // Subtract 1 to use 0-based indexing
+        Student studentToEdit = students.getActiveStudent(studentIndex - 1); // Subtract 1 to use 0-based indexing
         assert studentToEdit != null : "Retrieved student should not be null";
 
         studentToEdit.editStudent(newName, newLevel, newSubject);

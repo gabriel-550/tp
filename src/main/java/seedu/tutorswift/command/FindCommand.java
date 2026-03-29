@@ -45,15 +45,22 @@ public class FindCommand extends Command {
     @Override
     public void execute(StudentList students, Ui ui) throws TutorSwiftException {
         assert students != null : "StudentList cannot be null";
-        assert ui != null : "UI cannot be null";
-
         ArrayList<Student> results = new ArrayList<>();
 
-        for (int i = 0; i < students.getSize(); i++) {
-            Student s = students.getStudent(i);
+        // Searchs the active student list
+        searchList(students.getAllActive(), results);
+        // Searchs the archived student list
+        searchList(students.getAllArchived(), results);
 
+        ui.showFindResults(results);
+    }
+
+    /**
+     * Helper method to perform partial case-insensitive match on a list.
+     */
+    private void searchList(ArrayList<Student> source, ArrayList<Student> results) {
+        for (Student s : source) {
             boolean matches = true;
-
             if (name != null) {
                 matches &= s.getName().toLowerCase().contains(name.toLowerCase());
             }
@@ -63,12 +70,9 @@ public class FindCommand extends Command {
             if (level != null) {
                 matches &= s.getAcademicLevel().toLowerCase().contains(level.toLowerCase());
             }
-
             if (matches) {
                 results.add(s);
             }
         }
-
-        ui.showFindResults(results);
     }
 }

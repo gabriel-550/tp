@@ -97,29 +97,88 @@ public class Ui {
         System.out.println(LINE_DIVIDER);
     }
 
+
+    // @@author Alex-Chen-666
+
     /**
-     * Displays all students currently in the list.
+     * Displays all students currently in the active list.
      *
-     * @param students The list of students to display.
+     * @param students The StudentList containing active students.
      */
     public void showStudentList(StudentList students) {
         assert students != null : "StudentList cannot be null";
-
         System.out.println(LINE_DIVIDER);
 
-        if (students.getSize() == 0) {
-            System.out.println("There are currently no students.");
+        if (students.getActiveSize() == 0) {
+            System.out.println(" Your active student list is currently empty.");
         } else {
-            System.out.println("Here are the students in your list:");
-            for (int i = 0; i < students.getSize(); i++) {
-                Student student = students.getStudent(i);
-                assert student != null : "Student in list should never be null";
-                System.out.println((i + 1) + ". " + student);
+            System.out.println(" Here are the ACTIVE students in your list:");
+            for (int i = 0; i < students.getActiveSize(); i++) {
+                System.out.println((i + 1) + ". " + students.getActiveStudent(i));
             }
         }
-
         System.out.println(LINE_DIVIDER);
     }
+
+    /**
+     * Displays all students currently in the archive.
+     *
+     * @param students The StudentList containing archived students.
+     */
+    public void showArchivedList(StudentList students) {
+        assert students != null : "StudentList cannot be null";
+        System.out.println(LINE_DIVIDER);
+
+        if (students.getArchivedSize() == 0) {
+            System.out.println(" Your archive is currently empty.");
+        } else {
+            System.out.println(" Here are the ARCHIVED students:");
+            for (int i = 0; i < students.getArchivedSize(); i++) {
+                System.out.println((i + 1) + ". " + students.getArchivedStudent(i));
+            }
+        }
+        System.out.println(LINE_DIVIDER);
+    }
+
+    /**
+     * Shows a success message after archiving a student.
+     *
+     * @param student The student who was archived.
+     */
+    public void showArchiveSuccess(Student student) {
+        System.out.println(LINE_DIVIDER);
+        System.out.println(" [Archive Success] This student has been moved to archive:");
+        printStudentDetails(student);
+        System.out.println(LINE_DIVIDER);
+    }
+
+    /**
+     * Shows a success message after unarchiving a student.
+     *
+     * @param student The student who was moved back to the active list.
+     */
+    public void showUnarchiveSuccess(Student student) {
+        System.out.println(LINE_DIVIDER);
+        System.out.println(" [Unarchive Success] Student moved back to active list:");
+        printStudentDetails(student);
+        System.out.println(LINE_DIVIDER);
+    }
+    // @@author
+    // @@author Alex-Chen-666
+    /**
+     * Shows a success message after permanently deleting a student from the archive.
+     *
+     * @param student The archived student who was removed.
+     * @param totalArchived The remaining number of students in the archive.
+     */
+    public void showDeleteArchiveSuccess(Student student, int totalArchived) {
+        System.out.println(LINE_DIVIDER);
+        System.out.println(" [Done] Permanently removed this student from ARCHIVE:");
+        printStudentDetails(student);
+        System.out.println(" Now you have " + totalArchived + " students in your archive.");
+        System.out.println(LINE_DIVIDER);
+    }
+    // @@author
 
     /**
      * Displays students that match the find criteria.

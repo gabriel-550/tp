@@ -21,8 +21,8 @@ public class DeleteCommandTest {
         DeleteCommand command = new DeleteCommand(1);
         command.execute(students, ui);
 
-        assertEquals(1, students.getSize());
-        assertEquals("Brenda", students.getStudent(0).getName());
+        assertEquals(1, students.getActiveSize());
+        assertEquals("Brenda", students.getActiveStudent(0).getName());
     }
 
     @Test

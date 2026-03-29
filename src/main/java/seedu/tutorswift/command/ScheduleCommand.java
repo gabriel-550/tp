@@ -25,9 +25,9 @@ public class ScheduleCommand extends Command {
     public void execute(StudentList students, Ui ui) throws TutorSwiftException {
         // Find the student
         Student targetStudent = null;
-        for (int i = 0; i < students.getSize(); i++) {
-            if (students.getStudent(i).getName().equalsIgnoreCase(studentName)) {
-                targetStudent = students.getStudent(i);
+        for (int i = 0; i < students.getActiveSize(); i++) {
+            if (students.getActiveStudent(i).getName().equalsIgnoreCase(studentName)) {
+                targetStudent = students.getActiveStudent(i);
                 break;
             }
         }

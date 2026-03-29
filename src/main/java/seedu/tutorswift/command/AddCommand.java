@@ -31,10 +31,10 @@ public class AddCommand extends Command {
     public void execute(StudentList students, Ui ui) {
         assert students != null : "StudentList should not be null";
         assert ui != null : "Ui should not be null";
-        int initialSize = students.getSize();
+        int initialSize = students.getActiveSize();
         students.addStudent(studentToAdd);
 
-        assert students.getSize() == initialSize + 1 : "List size should increase by 1";
-        ui.showAddSuccess(studentToAdd, students.getSize());
+        assert students.getActiveSize() == initialSize + 1 : "Active list size should increase by 1";
+        ui.showAddSuccess(studentToAdd, students.getActiveSize());
     }
 }

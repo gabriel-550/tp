@@ -1,12 +1,18 @@
 test
 add n/John Doe l/Secondary 2 s/Math
-add n/John Tan l/Primary 6 s/Science
+add n/Alice Tan l/P6 s/English
 list
 grade 1 m/Midterm g/85
 grade 2 m/Final g/92
 list
-edit 2 n/Alex Tan s/English
+edit 2 n/Alex Tan s/Science
 list
-delete 2
+archive 1
 list
+list-archive
+unarchive 1
+list
+archive 1
+delete-archive 1
+list-archive
 bye

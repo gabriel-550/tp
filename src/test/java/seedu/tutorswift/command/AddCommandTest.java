@@ -41,8 +41,8 @@ class AddCommandTest {
         AddCommand command = new AddCommand(student);
         command.execute(studentList, ui);
 
-        assertEquals(1, studentList.getSize(), "Size should be 1");
-        Student added = studentList.getStudent(0);
+        assertEquals(1, studentList.getActiveSize(), "Size should be 1");
+        Student added = studentList.getActiveStudent(0);
 
         assertEquals("John Doe", added.getName());
         assertEquals("Secondary 4", added.getAcademicLevel());
@@ -62,9 +62,9 @@ class AddCommandTest {
         cmd1.execute(studentList, ui);
         cmd2.execute(studentList, ui);
 
-        assertEquals(2, studentList.getSize(), "Size should be 2 after two additions");
-        assertEquals("Alice", studentList.getStudent(0).getName());
-        assertEquals("Bob", studentList.getStudent(1).getName());
+        assertEquals(2, studentList.getActiveSize(), "Size should be 2 after two additions");
+        assertEquals("Alice", studentList.getActiveStudent(0).getName());
+        assertEquals("Bob", studentList.getActiveStudent(1).getName());
     }
 
     /**
@@ -78,7 +78,7 @@ class AddCommandTest {
         AddCommand command = new AddCommand(student);
         command.execute(studentList, ui);
 
-        assertEquals(nameWithSpaces, studentList.getStudent(0).getName());
+        assertEquals(nameWithSpaces, studentList.getActiveStudent(0).getName());
     }
 
 }

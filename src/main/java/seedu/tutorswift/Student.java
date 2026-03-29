@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 /**
  * Represents a student with a name, subject, and academic level.
+ * Includes status tracking for active or archived states.
  */
 public class Student {
 
@@ -11,15 +12,18 @@ public class Student {
     private String subject;
     private String academicLevel;
     private final ArrayList<Lesson> lessons;
+    private boolean isArchived;
     private final ArrayList<Grade> grades;
 
     /**
      * Creates a student with the given name, subject, and academic level.
+     * Default status is active (not archived).
      */
     public Student(String name, String academicLevel, String subject) {
         this.name = name;
         this.academicLevel = academicLevel;
         this.subject = subject;
+        this.isArchived = false;
         this.lessons = new ArrayList<>();
         this.grades = new ArrayList<>();
     }
@@ -64,6 +68,24 @@ public class Student {
             }
         }
     }
+    // @@author Alex-Chen-666
+    /**
+     * Checks if the student is currently archived.
+     *
+     * @return true if archived, false otherwise.
+     */
+    public boolean isArchived() {
+        return isArchived;
+    }
+    /**
+     * Sets the archived status of the student.
+     *
+     * @param archived The new status to set.
+     */
+    public void setArchived(boolean archived) {
+        isArchived = archived;
+    }
+    // @@author
 
     public void addLesson(Lesson newLesson) throws TutorSwiftException {
         for (Lesson existingLesson : lessons) {
@@ -99,8 +121,29 @@ public class Student {
                 }
             }
         }
-
-        return name + " | " + academicLevel + " | " + subject + gradeStr.toString();
+      
+        String status = isArchived ? " [ARCHIVED]" : "";
+        return name + " | " + academicLevel + " | " + subject + gradeStr.toString() + status;
     }
 
+    // @@author Alex-Chen-666
+    /**
+     * Converts the student data into a save-friendly string format.
+     *
+     * @return A formatted string for file storage.
+     */
+    public String toSaveFormat() {
+        StringBuilder gradeStr = new StringBuilder();
+
+        for (int i = 0; i < grades.size(); i++) {
+            gradeStr.append(grades.get(i).getAssessment())
+                .append(":")
+                .append(grades.get(i).getScore());
+            if (i < grades.size() - 1) {
+                gradeStr.append(",");
+            }
+        }
+        String gradeFinal = gradeStr.length() == 0 ? "EMPTY" : gradeStr.toString();
+        return name + " | " + academicLevel + " | " + subject + " | " + isArchived + " | " + gradeFinal;
+    }
 }
