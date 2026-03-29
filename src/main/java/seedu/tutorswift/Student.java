@@ -11,6 +11,7 @@ public class Student {
     private String subject;
     private String academicLevel;
     private final ArrayList<Lesson> lessons;
+    private final ArrayList<Grade> grades;
 
     /**
      * Creates a student with the given name, subject, and academic level.
@@ -20,6 +21,7 @@ public class Student {
         this.academicLevel = academicLevel;
         this.subject = subject;
         this.lessons = new ArrayList<>();
+        this.grades = new ArrayList<>();
     }
 
     public String getName() {
@@ -56,7 +58,10 @@ public class Student {
         }
 
         if (subject != null) {
-            this.subject = subject;
+            if (!subject.equals(this.subject)) {
+                this.subject = subject;
+                this.grades.clear();
+            }
         }
     }
 
@@ -69,6 +74,10 @@ public class Student {
         lessons.add(newLesson);
     }
 
+    public void addGrade(String assessment, int score) {
+        grades.add(new Grade(assessment, score));
+    }
+
     /**
      * Returns a string representation of the student in the format:
      * "name | academic level | subject".
@@ -79,7 +88,19 @@ public class Student {
      */
     @Override
     public String toString() {
-        return name + " | " + academicLevel + " | " + subject;
+        StringBuilder gradeStr = new StringBuilder();
+
+        if (!grades.isEmpty()) {
+            gradeStr.append(" | Grades: ");
+            for (int i = 0; i < grades.size(); i++) {
+                gradeStr.append("[").append(grades.get(i).toString()).append("]");
+                if (i < grades.size() - 1) {
+                    gradeStr.append(" "); // space between grades only
+                }
+            }
+        }
+
+        return name + " | " + academicLevel + " | " + subject + gradeStr.toString();
     }
 
 }
