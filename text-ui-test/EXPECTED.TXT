@@ -19,30 +19,45 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
  Got it. I've added this student:
-    John Tan | Primary 6 | Science
+    Alice Tan | P6 | English
  Now you have 2 students in the list.
 ____________________________________________________________
 ____________________________________________________________
-Here are the students in your list:
+ Here are the ACTIVE students in your list:
 1. John Doe | Secondary 2 | Math
-2. John Tan | Primary 6 | Science
+2. Alice Tan | P6 | English
 ____________________________________________________________
 ____________________________________________________________
- Done! I've updated the details for this student:
-    Alex Tan | Primary 6 | English
+ [Archive Success] This student has been moved to archive:
+    John Doe | Secondary 2 | Math [ARCHIVED]
 ____________________________________________________________
 ____________________________________________________________
-Here are the students in your list:
-1. John Doe | Secondary 2 | Math
-2. Alex Tan | Primary 6 | English
+ Here are the ACTIVE students in your list:
+1. Alice Tan | P6 | English
 ____________________________________________________________
 ____________________________________________________________
- Done! I've removed this student:
-    Alex Tan | Primary 6 | English
- Now you have 1 students in the list.
+ Here are the ARCHIVED students:
+1. John Doe | Secondary 2 | Math [ARCHIVED]
 ____________________________________________________________
 ____________________________________________________________
-Here are the students in your list:
-1. John Doe | Secondary 2 | Math
+ [Unarchive Success] Student moved back to active list:
+    John Doe | Secondary 2 | Math
+____________________________________________________________
+____________________________________________________________
+ Here are the ACTIVE students in your list:
+1. Alice Tan | P6 | English
+2. John Doe | Secondary 2 | Math
+____________________________________________________________
+____________________________________________________________
+ [Archive Success] This student has been moved to archive:
+    Alice Tan | P6 | English [ARCHIVED]
+____________________________________________________________
+____________________________________________________________
+ [Done] Permanently removed this student from ARCHIVE:
+    Alice Tan | P6 | English [ARCHIVED]
+ Now you have 0 students in your archive.
+____________________________________________________________
+____________________________________________________________
+ Your archive is currently empty.
 ____________________________________________________________
 Goodbye! Thanks for using TutorSwift.

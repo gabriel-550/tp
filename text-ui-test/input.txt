@@ -1,9 +1,13 @@
 test
 add n/John Doe l/Secondary 2 s/Math
-add n/John Tan l/Primary 6 s/Science
+add n/Alice Tan l/P6 s/English
 list
-edit 2 n/Alex Tan s/English
+archive 1
 list
-delete 2
+list-archive
+unarchive 1
 list
+archive 1
+delete-archive 1
+list-archive
 bye
