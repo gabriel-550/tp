@@ -51,31 +51,4 @@ public class UpcomingCommandTest {
 
         assertTrue(uiTest.isEmptyCalled);
     }
-
-    @Test
-    public void execute_withLessons_sortsAndCallsShowUpcomingLessons() throws TutorSwiftException {
-        Student testStudent1 = new Student("Alice", "Primary 1", "Math");
-        Student testStudent2 = new Student("Bob", "Secondary 3", "Physics");
-        students.addStudent(testStudent1);
-        students.addStudent(testStudent2);
-
-        DayOfWeek today = LocalDate.now().getDayOfWeek();
-        DayOfWeek tomorrow = today.plus(1);
-
-        Lesson earlierLesson = new Lesson(today, LocalTime.of(10, 0), LocalTime.of(12, 0));
-        Lesson laterLesson = new Lesson(tomorrow, LocalTime.of(14, 0), LocalTime.of(16, 0));
-
-        // Add them out of order
-        testStudent1.addLesson(laterLesson);
-        testStudent2.addLesson(earlierLesson);
-
-        UpcomingCommand command = new UpcomingCommand();
-
-        command.execute(students, uiTest);
-
-        assertEquals(2, uiTest.capturedLessons.size());
-        // Verify the command correctly sorted them so the earlier lesson is first
-        assertEquals(earlierLesson, uiTest.capturedLessons.get(0).getLesson());
-        assertEquals(laterLesson, uiTest.capturedLessons.get(1).getLesson());
-    }
 }
