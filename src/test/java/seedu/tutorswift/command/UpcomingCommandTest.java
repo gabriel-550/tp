@@ -2,19 +2,13 @@ package seedu.tutorswift.command;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import seedu.tutorswift.Lesson;
 import seedu.tutorswift.RelativeLesson;
-import seedu.tutorswift.Student;
 import seedu.tutorswift.StudentList;
 import seedu.tutorswift.TutorSwiftException;
 import seedu.tutorswift.Ui;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class UpcomingCommandTest {
