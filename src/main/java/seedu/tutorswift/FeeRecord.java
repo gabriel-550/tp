@@ -86,8 +86,20 @@ public class FeeRecord {
     @Override
     public String toString() {
         String feeStr = (feePerLesson == 0) ? "Not set" : "$" + feePerLesson + "/lesson";
-        YearMonth now = YearMonth.now();
-        String payStr = isPaidForMonth(now) ? "Paid ✓" : "Unpaid ✗";
-        return "Fee: " + feeStr + " | " + now.getMonth() + " " + now.getYear() + ": " + payStr;
+
+        if (paidMonths.isEmpty()) {
+            return "Fee: " + feeStr + " | No payments recorded";
+        }
+
+        StringBuilder paidStr = new StringBuilder();
+        for (int i = 0; i < paidMonths.size(); i++) {
+            YearMonth ym = paidMonths.get(i);
+            paidStr.append(ym.getMonth()).append(" ").append(ym.getYear()).append(": Paid ✓");
+            if (i < paidMonths.size() - 1) {
+                paidStr.append(", ");
+            }
+        }
+
+        return "Fee: " + feeStr + " | " + paidStr.toString();
     }
 }

@@ -156,6 +156,7 @@ public class Student {
         return name + " | " + academicLevel + " | " + subject
                 + gradeStr.toString()
                 + remarkStr
+                + " | " + feeRecord.toString()
                 + status;
     }
 
