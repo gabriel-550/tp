@@ -18,6 +18,9 @@ public class UpcomingCommand extends Command {
 
     @Override
     public void execute(StudentList students, Ui ui) throws TutorSwiftException {
+        assert students != null : "StudentList should not be null";
+        assert ui != null : "Ui should not be null";
+
         List<RelativeLesson> allLessons = new ArrayList<>();
         DayOfWeek today = LocalDate.now().getDayOfWeek();
         LocalTime now = LocalTime.now();
