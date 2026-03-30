@@ -1,5 +1,6 @@
 package seedu.tutorswift;
 
+import java.util.List;
 import java.util.Scanner;
 import java.time.YearMonth;
 
@@ -250,6 +251,34 @@ public class Ui {
                 + month.getMonth() + " " + month.getYear() + ".");
         printStudentDetails(student);
         System.out.println(LINE_DIVIDER);
+    }
+
+    /**
+     * Displays a message when there are no upcoming lessons.
+     */
+    public void showEmptyUpcomingLessons() {
+        System.out.println("You have no upcoming lessons scheduled.");
+    }
+
+    /**
+     * Formats and prints the list of upcoming lessons according to current date and time.
+     * * @param entries The sorted list of relative lessons.
+     */
+    public void showUpcomingLessons(List<RelativeLesson> entries) {
+        StringBuilder output = new StringBuilder("Here are your upcoming lessons for the next 7 days:\n");
+
+        for (RelativeLesson entry : entries) {
+            String dayMarker = entry.getDaysFromToday() == 0 ? " (Today)" :
+                    entry.getDaysFromToday() == 1 ? " (Tomorrow)" : "";
+
+            output.append("- ").append(entry.getLesson().getDay()).append(dayMarker)
+                    .append(" ").append(entry.getLesson().getStartTime())
+                    .append(" to ").append(entry.getLesson().getEndTime())
+                    .append(" | ").append(entry.getStudent().getName())
+                    .append(" (").append(entry.getStudent().getSubject()).append(")\n");
+        }
+
+        System.out.println(output.toString().trim());
     }
 
     /**

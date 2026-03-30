@@ -17,6 +17,7 @@ import seedu.tutorswift.command.RemarkCommand;
 import seedu.tutorswift.command.FeeCommand;
 import seedu.tutorswift.command.PaidCommand;
 import seedu.tutorswift.command.UnpaidCommand;
+import seedu.tutorswift.command.UpcomingCommand;
 
 import java.time.YearMonth;
 import java.time.DayOfWeek;
@@ -103,6 +104,8 @@ public class Parser {
             return parsePaid(arguments);
         case "unpaid":
             return parseUnpaid(arguments);
+        case "upcoming":
+            return new UpcomingCommand();
         default:
             throw new TutorSwiftException("I'm sorry, but I don't know what '" + userInput + "' means :(\n");
         }
