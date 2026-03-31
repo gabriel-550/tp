@@ -1,0 +1,44 @@
+@startuml
+
+participant ":TutorSwift" as Main
+participant "c:Command" as Command
+participant ":StudentList" as StudentList
+participant ":Storage" as Storage
+
+Main -> Command : execute(students, ui)
+activate Command
+
+Command -> StudentList : updateStates()
+activate StudentList
+StudentList --> Command
+deactivate StudentList
+
+Command --> Main
+deactivate Command
+
+note over Main : If c.isExit() is false
+
+Main -> Storage : save(students)
+activate Storage
+
+Storage -> StudentList : getAllActive()
+activate StudentList
+StudentList --> Storage : activeStudents
+deactivate StudentList
+
+Storage -> StudentList : getAllArchived()
+activate StudentList
+StudentList --> Storage : archivedStudents
+deactivate StudentList
+
+loop for every student in both lists
+    Storage -> Storage : encodeToPipeFormat(s)
+end
+
+Storage -> Storage : writeToFile()
+Storage --> Main
+deactivate Storage
+
+[<-- Main
+deactivate Main
+@enduml

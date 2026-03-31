@@ -1,0 +1,46 @@
+@startuml
+
+participant ":TutorSwift" as Main
+participant ":Parser" as Parser
+participant "a:ArchiveCommand" as ArchiveCommand
+participant "s:StudentList" as StudentList
+participant ":Ui" as Ui
+
+[-> Main : "archive 1"
+activate Main
+
+Main -> Parser : parseUserInput("archive 1")
+activate Parser
+
+create ArchiveCommand
+Parser -> ArchiveCommand : ArchiveCommand(1)
+activate ArchiveCommand
+
+ArchiveCommand --> Parser
+deactivate ArchiveCommand
+
+Parser --> Main : a
+deactivate Parser
+
+Main -> ArchiveCommand : execute(s, ui)
+activate ArchiveCommand
+
+ArchiveCommand -> StudentList : archiveStudent(0)
+activate StudentList
+
+StudentList -> StudentList : remove(0) from active
+StudentList -> StudentList : add to archived
+StudentList --> ArchiveCommand : archivedStudent
+deactivate StudentList
+
+ArchiveCommand -> Ui : showArchiveSuccess(archivedStudent)
+activate Ui
+Ui --> ArchiveCommand
+deactivate Ui
+
+ArchiveCommand --> Main
+deactivate ArchiveCommand
+
+[<-- Main
+deactivate Main
+@enduml

@@ -337,6 +337,68 @@ Tested using `FindCommandTest` and `ParserTest`:
 
 ---
 
+### Archive Student Feature
+
+#### Implementation
+The archive mechanism allows the user to move students between an active workspace and a historical record list. It is facilitated primarily by the `ArchiveCommand`, `UnarchiveCommand`, `ListArchiveCommand`, and `StudentList` classes.
+
+The core logic resides within the `StudentList` class, which manages two separate internal lists: `activeStudents` and `archivedStudents`. This ensures that archived students do not clutter the primary view while their historical data remains accessible.
+
+The archival operation is executed through the following sequence:
+1. `ArchiveCommand#execute(students, ui)` is invoked with a specific index.
+2. The command validates the provided `studentIndex` against the size of the active student list.
+3. If valid, `StudentList#archiveStudent(index)` is called.
+4. The student is removed from `activeStudents`, their `isArchived` status is set to `true`, and they are added to `archivedStudents`.
+5. The `Ui` displays a success message showing the student's name and their new `[ARCHIVED]` status.
+
+The following sequence diagram shows how an archive operation executes:
+
+![Archive Sequence Diagram](images/ArchiveSequenceDiagram.png)
+
+#### Design Considerations
+
+**Aspect: Data structure for managing two states (Active vs. Archived).**
+
+- **Alternative 1 (Current Choice):** Use two separate `ArrayList` objects within `StudentList`.
+  - **Pros:** High performance for listing operations. Commands like `list` and `list-archive` only need to iterate over their respective small lists rather than filtering a giant database.
+  - **Cons:** Requires explicit logic to move objects between lists, increasing the complexity of `StudentList`.
+
+- **Alternative 2:** Use a single list and filter by a boolean flag `isArchived` during every display command.
+  - **Pros:** Simpler data model; adding or deleting a student only affects one list.
+  - **Cons:** Slower UI response time as the dataset grows, because every display command requires an $O(N)$ traversal to filter students.
+
+---
+
+### Storage Feature
+
+#### Implementation
+The storage mechanism ensures data persistence by saving and loading student data to a local text file (`./data/tutorswift.txt`). It is integrated into the `TutorSwift` main loop to provide automatic saving after every successful command execution.
+
+The persistence logic is handled by the `Storage` class, which manages the following sub-tasks:
+
+1.  **Automatic Saving**: After a command is successfully executed in `TutorSwift#run()`, `storage.save(students)` is triggered. The system iterates through both active and archived lists.
+2.  **Data Encoding**: Each `Student` object is converted into a structured, pipe-separated string via `Student#toSaveFormat()`. The format is: `Name | Level | Subject | isArchived | Grades | Remark | FeeRecord`.
+3.  **Data Decoding**: Upon startup, `Storage#load()` reads the file. The method `parseLineToStudent` carefully reconstructs the `Student` object, including nested data like grade lists and financial records.
+4.  **Robust Error Handling**: If a specific line is corrupted (e.g., manually edited incorrectly by a user), the system catches the exception, logs a `WARNING`, and skips to the next line. This prevents a single error from making the entire database unreadable.
+
+The following sequence diagram illustrates how the application state is automatically persisted after a user command is executed:
+
+![Storage Save Sequence Diagram](images/StorageSaveSequenceDiagram.png)
+
+#### Design Considerations
+
+**Aspect: Execution of the Save operation.**
+
+- **Alternative 1 (Current Choice):** Save to disk after every successful command.
+  - **Pros:** Maximum data safety. In the event of an unexpected crash or power loss, the user loses at most one command's worth of work.
+  - **Cons:** Slight performance overhead due to frequent Disk I/O (though negligible for text files of this size).
+
+- **Alternative 2:** Save only when the user executes the `exit` command.
+  - **Pros:** Better performance as Disk I/O happens only once.
+  - **Cons:** High risk of data loss if the user closes the terminal window directly or the system crashes.
+
+---
+
 ### Delete Feature
 
 The `delete` command permanently removes an active student from the student list by
