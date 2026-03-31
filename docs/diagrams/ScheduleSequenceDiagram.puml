@@ -1,0 +1,58 @@
+@startuml
+hide footbox
+skinparam ArrowFontStyle normal
+
+participant ":ScheduleCommand" as ScheduleCommand
+participant "students:StudentList" as StudentList
+participant "targetStudent:Student" as Student
+participant "newLesson:Lesson" as Lesson
+participant "existingLesson:Lesson" as ExistingLesson
+participant "ui:Ui" as Ui
+
+[-> ScheduleCommand : execute(students, ui)
+activate ScheduleCommand
+
+loop activeSize times
+    ScheduleCommand -> StudentList : getActiveStudent(i)
+    activate StudentList
+    StudentList --> ScheduleCommand : student
+    deactivate StudentList
+
+    ScheduleCommand -> Student : getName()
+    activate Student
+    Student --> ScheduleCommand : name
+    deactivate Student
+end
+
+create Lesson
+ScheduleCommand -> Lesson : Lesson(day, startTime, endTime)
+activate Lesson
+Lesson --> ScheduleCommand : newLesson
+deactivate Lesson
+
+ScheduleCommand -> Student : addLesson(newLesson)
+activate Student
+
+opt has existing lessons
+    loop all existing lessons
+        Student -> ExistingLesson : isOverlapping(newLesson)
+        activate ExistingLesson
+        ExistingLesson --> Student : false
+        deactivate ExistingLesson
+    end
+end
+deactivate Student
+
+ScheduleCommand -> Student : getName()
+activate Student
+Student --> ScheduleCommand : "Alice"
+deactivate Student
+
+ScheduleCommand -> Ui : showLessonScheduled("Alice", newLesson)
+activate Ui
+deactivate Ui
+
+[<-- ScheduleCommand
+deactivate ScheduleCommand
+destroy ScheduleCommand
+@enduml
