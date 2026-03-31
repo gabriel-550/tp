@@ -335,30 +335,78 @@ Tested using `FindCommandTest` and `ParserTest`:
 - Multiple keywords per field
 - Additional filtering options
 
+---
+
+## Appendix: 
+
+
 ## Product scope
+
+--- 
+
 ### Target user profile
 
-{Describe the target user profile}
+TutorSwift is for private tutors who manage multiple students and need to record lesson data and administrative details instantly between sessions.
 
 ### Value proposition
 
-{Describe the value proposition: what problem does it solve?}
+TutorSwift is a high-speed administrative tool that allows tutors to track students, grades, lessons and manage tuition fees through CLI interaction, it helps tutors stay organised without sacrificing their break time or lesson quality.
 
 ## User Stories
 
-|Version| As a ... | I want to ... | So that I can ...|
-|--------|----------|---------------|------------------|
-|v1.0|new user|see usage instructions|refer to them when I forget how to use the application|
-|v2.0|user|find a to-do item by name|locate a to-do without having to go through the entire list|
+---
+
+| Version | As a ...                        | I want to ...                                                                                               | So that I can ...                                                                                                                           |
+|---------|---------------------------------|-------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| v1.0    | tutor                           | add a student with their name, academic level, and subject                                                  | track my new student enrolments                                                                                                             |
+| v1.0    | tutor                           | view a list of all my existing students and his/her details                                                 | monitor student record                                                                                                                      |
+| v1.0    | tutor                           | delete a student who no longer take tuition classes with me                                                 | update and maintain currency of my student list                                                                                             |
+| v1.0    | tutor                           | edit my student details so that I can handle changes in student information                                 | edit my student records to stay up to date without deleting entire student record                                                           |
+| v2.0    | tutor                           | schedule a lesson for a specific student by assigning them a day of the week, a start time, and an end time | accurately track my teaching timetable and ensure I do not accidentally double-book myself for that time slot.                              |
+| v2.0    | tutor                           | view a sorted list of all my scheduled lessons relative to the current day and time                         | instantly see who I am teaching next and prepare my materials without having to manually search through every student's individual profile. |
+| v2.0    | tutor                           | assign grades to my students                                                                                | track their assessment performance and keep their academic records up to date.                                                              |
+| v2.0    | tutor                           | add remarks to my students                                                                                  | provide personalized notes or feedback and keep track of important student observations.                                                    |
+| v2.0    | tutor                           | record the student's tuition fee for each lesson and mark whether it has been paid or unpaid                | keep track of payment status and outstanding payments efficiently.                                                                          |
+| v2.0    | tutor                           | find a student, subject or level by keyword quickly                                                         | search for details                                                                                                                          |
+| v2.0    | tutor managing multiple cohorts | move graduated or inactive students to a separate archive list                                              | still access their performance history if needed and my primary workspace remains uncluttered                                               |
+| v2.0    | tutor                           | save my data automatically to the local disk                                                                | do not have to manually save my progress and can resume exactly where I left off when I restart the app.                                    |
 
 ## Non-Functional Requirements
 
-{Give non-functional requirements}
+---
+
+1. Hardware Requirements: The system should work on any mainstream operating system (Windows, macOS, Linux) that has Java 17 or above installed.
+2. Performance: The system should respond to all user commands within two seconds.
+3. Capacity: The system should be capable of holding up to 1,000 student profiles (including their associated grades and lessons, etc) without noticeable sluggishness in performance for typical usage.
+4. User Interface: A user who is an above-average typist should be able to accomplish tasks significantly faster using the Command Line Interface (CLI) compared to a traditional mouse-driven Graphical User Interface (GUI).
+5. Data Persistence: Data should be saved locally in a human-editable text file without requiring the installation of a dedicated Database Management System (DBMS).
+6. Robustness: The system should not crash under typical usage or when provided with invalid user input, it should gracefully handle errors and display helpful feedback to the user.
 
 ## Glossary
 
-* *glossary item* - Definition
+---
+
+* *CLI (Command Line Interface)* - A text-based user interface used to view and manage application files and execute programs by typing commands
+* *Active Student* - A student currently enrolled in the tutor's classes, visible in the main student list
+* *Archived Student* - A past student whose records (grades, past subjects) are retained in the system for historical reference, but who is hidden from the active main list
+* *Prefix* - A specific character or word sequence (e.g., sub/, day/, n/) used in a command to denote the type of data being supplied by the user.
 
 ## Instructions for manual testing
 
-{Give instructions on how to do a manual product testing e.g., how to load sample data to be used for testing}
+---
+
+Given below are instructions to test the app manually.
+
+* Note: These instructions only provide a starting point for testers to verify the basic functionality of the application. Testers are expected to do more exploratory testing.
+
+### Launch and Shutdown
+
+1. Initial launch 
+- Download the latest `.jar` file from the releases page.
+- Move the `.jar` file into an empty folder where you want to store your TutorSwift data.
+- Open your terminal or command prompt, navigate to the folder, and run the command `java -jar tutorswift.jar`.
+- _Expected outcome:_ The application launches, displays the TutorSwift logo, the welcome message, and creates a `data` folder (if it does not already exist).
+
+2. Shutdown
+- Type `exit` and press Enter
+- _Expected outcome:_ The application displays a goodbye message and terminates cleanly. All data used during the session is saved to the data storage file.
