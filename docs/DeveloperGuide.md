@@ -126,7 +126,7 @@ Option 1 was chosen for better modularity and maintainability.
 #### Overview
 The `find` feature allows users to search for students by:
 - Name (`n/`)
-- Subject (`s/`)
+- Subject (`sub/`)
 - Academic level (`l/`)
 
 The search supports **partial** and **case-insensitive** matching.
@@ -137,7 +137,7 @@ The search supports **partial** and **case-insensitive** matching.
 
 #### Parsing Logic
 The `Parser.parseFind()` method:
-- Extracts values using prefixes `n/`, `s/`, and `l/`
+- Extracts values using prefixes `n/`, `sub/`, and `l/`
 - Returns a `FindCommand` with the extracted fields
 - Throws `TutorSwiftException` if:
   - Input is empty
@@ -162,7 +162,7 @@ Step 3. Filters students based on non-null fields:
 Step 4. Passes matching results to `Ui.showFindResults()`
 
 ---
-![Edit Sequence Diagram](images/FindCommandSequenceDiagram.png)
+![Edit Sequence Diagram](images/FindSequenceDiagram.png)
 #### Helper Method
 `searchList()`:
 - Iterates through a list of students
