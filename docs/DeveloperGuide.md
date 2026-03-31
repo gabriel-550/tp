@@ -121,6 +121,100 @@ Option 1 was chosen for better modularity and maintainability.
 - Grades are stored as a list of `Grade` objects
 - Duplicate assessments are allowed (no validation enforced)
 
+### Find Feature
+
+#### Overview
+The `find` feature allows users to search for students by:
+- Name (`n/`)
+- Subject (`s/`)
+- Academic level (`l/`)
+
+The search supports **partial** and **case-insensitive** matching.
+
+---
+
+#### Implementation
+
+#### Parsing Logic
+The `Parser.parseFind()` method:
+- Extracts values using prefixes `n/`, `s/`, and `l/`
+- Returns a `FindCommand` with the extracted fields
+- Throws `TutorSwiftException` if:
+  - Input is empty
+  - No valid prefixes are provided
+
+Fields not specified are set to `null`.
+
+---
+![Edit Sequence Diagram](images/ParserFindSequenceDiagram.png)
+
+#### Command Execution
+When `FindCommand.execute()` is called:
+
+Step 1. Retrieves active and archived students
+
+Step 2. Searches both lists using `searchList()`
+
+Step 3. Filters students based on non-null fields:
+  - Uses `contains()` for partial matching
+  - Converts strings to lowercase for case-insensitive comparison
+
+Step 4. Passes matching results to `Ui.showFindResults()`
+
+---
+![Edit Sequence Diagram](images/FindCommandSequenceDiagram.png)
+#### Helper Method
+`searchList()`:
+- Iterates through a list of students
+- Applies filtering conditions
+- Adds matching students to a results list
+
+---
+
+#### Design Considerations
+
+- **Search scope**
+  - Searches both active and archived students
+  - Provides more comprehensive results
+
+- **Matching strategy**
+  - Uses partial (`contains`) and case-insensitive matching
+  - Improves usability
+
+- **Flexible input**
+  - Allows any combination of fields
+  - Supports varied user queries
+
+- **Validation**
+  - Rejects empty or invalid inputs
+  - Prevents meaningless searches
+
+---
+
+#### Error Handling
+
+- Throws `TutorSwiftException` when:
+  - No prefixes are provided
+  - All fields are empty
+- Displays appropriate message if no results are found
+
+---
+
+#### Testing
+
+Tested using `FindCommandTest` and `ParserTest`:
+- Valid searches (single and multiple fields)
+- Invalid inputs (no prefixes, empty values)
+- No matching results
+
+---
+
+#### Possible Improvements
+
+- Fuzzy matching (typo tolerance)
+- Multiple keywords per field
+- Additional filtering options
+
 ## Product scope
 ### Target user profile
 
