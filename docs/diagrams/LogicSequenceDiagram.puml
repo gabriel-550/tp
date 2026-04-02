@@ -1,0 +1,57 @@
+@startuml
+hide footbox
+actor User
+participant ":Ui" as UI
+participant ":Parser" as P
+participant ":DeleteCommand" as DC
+participant ":StudentList" as SL
+participant ":Student" as S
+participant ":TutorSwift" as TS
+participant ":Storage" as ST
+
+User -> UI : enter "delete 1"
+activate UI
+
+UI -> P : parseUserInput("delete 1")
+activate P
+
+P -> P : parseDelete("1")
+note right of P : validate index
+P --> DC : new DeleteCommand(index=1)
+activate DC
+deactivate P
+
+UI -> DC : execute(students, ui)
+activate DC
+
+DC -> SL : deleteActiveStudent(0)
+activate SL
+SL --> DC : deletedStudent
+deactivate SL
+
+DC -> S : (deletedStudent).getDetails()
+activate S
+S --> DC : name, subject, level
+deactivate S
+
+DC -> UI : showDeleteSuccess(deletedStudent, students.getActiveSize())
+deactivate DC
+
+UI -> TS : return control to main loop
+activate TS
+TS -> ST : save(students)
+activate ST
+ST --> TS : saveAck
+deactivate ST
+deactivate TS
+
+UI -> User : prints deletion confirmation
+deactivate UI
+
+alt parse or execution error
+    P --> UI : throws TutorSwiftException(message)
+    UI -> User : showError(message)
+end
+
+destroy DC
+@enduml
