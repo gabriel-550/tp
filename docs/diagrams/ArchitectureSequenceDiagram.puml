@@ -1,0 +1,41 @@
+@startuml
+hide footbox
+title System Architecture — delete command (simplified)
+
+actor User
+participant "Ui" as UI
+participant "Logic/Parser" as LOGIC
+participant "Command" as CMD
+participant "Model" as MODEL
+participant "Storage" as ST
+
+User -> UI : enter "delete 1"
+activate UI
+
+UI -> LOGIC : parseUserInput("delete 1")
+activate LOGIC
+LOGIC --> CMD : new DeleteCommand
+deactivate LOGIC
+
+UI -> CMD : execute(model, ui)
+activate CMD
+
+CMD -> MODEL : deleteActiveStudent(0)
+MODEL --> CMD : deletedStudent
+
+CMD -> UI : showDeleteSuccess(deletedStudent)
+deactivate CMD
+
+UI -> ST : save(model)
+ST --> UI :
+
+UI --> User : prints confirmation
+deactivate UI
+
+alt parse or execution error
+    LOGIC --> UI : throws Exception
+    UI --> User : showError(message)
+end
+
+destroy CMD
+@enduml

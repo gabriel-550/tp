@@ -1,14 +1,105 @@
 # Developer Guide
 
-## Acknowledgements
 
-{list here sources of all reused/adapted ideas, code, documentation, and third-party libraries -- include links to the original source as well}
+## Design
 
-## Design & Implementation
+### System Architecture
 
-This section describes some noteworthy details on how certain features are implemented.
+Given below is a quick overview of the main components and how they interact with each other.
+
+#### Main components of the architecture
+
+- UI: The console interface of TutorSwift, implemented by the `Ui` class. It reads user input and displays results or error messages.
+- Logic: The command executor. It consists of the `Parser` (which interprets user input) and the `Command` hierarchy (which executes actions on the model).
+- Model: Holds the data of the App in memory. This includes `Student`, `StudentList`, `Lesson`, `FeeRecord`, and related domain classes.
+- Storage: Reads data from, and writes data to, the hard disk. Implemented by the `Storage` class, which serializes and deserializes StudentList.
+- Commons: Represents a collection of utility classes (e.g., exceptions, logging, validation) used by multiple other components.
+  
+- ![Sequence diagram — delete command](images/ArchitectureSequenceDiagram.png)
+---
+
+### UI Component
+The API of this component is specified in Ui.java.
+
+#### Structure of the UI component
+- Console-based single window: Ui is a single presentation class that centralises all input/output responsibilities `welcome, prompts, formatted results, error messages, dividers`.
+- Presentation helpers: small private helpers `e.g., printStudentDetails` keep formatting consistent across different showXxx methods.
+- Constants: visual strings `logo, dividers, messages` are kept as constants inside Ui so layout/text changes are localised.
+####  What the UI component does
+- Reads raw input from System.in via readUserInput().
+- Displays results for domain operations `add, edit, delete, archive, schedule, fee updates, find, upcoming lessons`.
+- Shows errors passed up from the Logic layer `showError(String)`.
+- Manages lifecycle of input resources`close()`, and prints startup/exit messages `showWelcome(), showExit()`.
 
 ---
+
+### Logic Component
+The API surface for parsing is specified in `Parser.parseUserInput(String)`. 
+Command execution is specified by `command.Command` `execute(StudentList, Ui) and isExit()`
+
+
+#### Structure of the Logic component
+- Parser: single entry point `parseUserInput(String)` that tokenises the command word and delegates to `parseXxx` helpers (for example `parseAdd`, `parseEdit`, `parseDelete`).
+- Command hierarchy: abstract Command defines `execute(StudentList, Ui)` and `isExit()`. Concrete subclasses (for example `AddCommand`, `DeleteCommand`) implement behaviour.
+- Parsing helpers: `getValueByPrefix(...)` and `parseIndex(...)` encapsulate common parsing and validation logic.
+
+####  What the Logic component does
+- Tokenise raw user input into `commandName` and `arguments`.
+- Dispatch to the appropriate `parseXxx` helper based on `commandName`.
+- Validate arguments and construct a concrete `Command` or throw `TutorSwiftException` with a user-facing message.
+- Execute the returned command via `command.execute(students, ui)`, which performs model updates and calls `Ui` to display results.
+- Persist: the caller (main loop) checks `isExit()` and, if not exiting, calls `Storage.save(students)`.
+
+![Sequence diagram — delete command](images/LogicSequenceDiagram.png)
+*Sequence diagram for the sample execution of `delete` command
+
+#### Design notes
+- Parser is syntax/validation only;  `Command` objects encapsulate execution and interact with the Model.
+- Adding a new command requires: add a `case` in `parseUserInput`, implement `parseXxx` helper, and implement `XxxCommand`.
+- Parser throws `TutorSwiftException` with actionable messages; callers catch and forward messages to `Ui.showError(...)`.
+
+---
+
+### Model Component
+The Model component holds the in‑memory data of TutorSwift and enforces domain rules. 
+It defines the core entities (`Student`, `StudentList`, `Lesson`, `FeeRecord`, etc.) and provides APIs for mutation and queries.
+
+#### What the Model component does
+- Maintain the current state of all students (active and archived).
+- Provide methods to add, delete, edit, archive, and query students.
+- Track lessons, fee records, and remarks associated with each student.
+- Enforce invariants such as preventing overlapping lessons or invalid fee states.
+
+#### Key classes
+- `Student`: encapsulates a single student’s details (name, subject, academic level, lessons, fee record, remark, archived flag).
+- `StudentList`: manages collections of active and archived students, exposes APIs like `addStudent()`, `deleteActiveStudent()`.
+- `Lesson`: represents a scheduled lesson with day and time slots.
+- `FeeRecord`: tracks monthly payment status for a student.
+
+#### Interactions
+- Logic commands call `StudentList` methods to mutate state.
+- Storage serializes and deserializes `StudentList` and `Student` objects to/from disk.
+- UI queries the Model indirectly (through Logic) to display lists or details.
+
+---
+
+### Storage Component
+The API of this component is specified in `Storage.java`.
+
+#### Structure of the Storage component
+- Constructors: `Storage()` uses default path `./data/tutorswift.txt`. `Storage(String filePath)` supports tests.
+- Public methods: `save(StudentList)` and `load()`.
+- Helpers: `prepareDirectory(String)` and `parseLineToStudent(String)`.
+
+#### What the Storage component does
+- Ensure parent directories exist.
+- Serialize active and archived students using `Student.toSaveFormat()` and write them to file.
+- Read file line-by-line, reconstruct `Student` objects via `parseLineToStudent`, skip corrupted lines with warnings.
+- Provide a testable constructor for temporary file paths
+
+---
+
+## Implementation
 
 ### Edit Student Feature
 
