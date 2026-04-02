@@ -64,5 +64,5 @@ Given below are my contributions to the project.
 *   **Release Management**: Verified the `v1.0` Shadow JAR on different computers.
 
 ### 6. Review/Mentoring Contributions
-*   Reviewed PRs involving `Grade` and `Lesson` features, providing feedback on Javadoc completeness and the Single Level of Abstraction Principle (SLAP).
+*   Reviewed PRs, providing feedback on Javadoc completeness and the Single Level of Abstraction Principle (SLAP).
 *   Assisted teammates in resolving Checkstyle formatting errors (e.g., Indentation and Newline issues) during the CI process.
