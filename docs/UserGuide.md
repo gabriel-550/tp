@@ -62,6 +62,17 @@ Refer to the Features below for details of each command.
 
   e.g. if the command specifies `bye 123`, it will be interpreted as `bye`.
 
+### Adding a student: `add`
+Adds a new student to your active list.
+
+Format: `add n/NAME l/ACADEMIC_LEVEL sub/SUBJECT`
+
+*   All three fields are **mandatory** for new entries.
+*   TutorSwift requires student names to be **unique** to avoid confusion.
+
+Example: `add n/Alex Tan l/Secondary 3 sub/Mathematics`
+
+
 ### Editing a student: `edit`
 
 Edits an existing student in the student list.
@@ -79,6 +90,40 @@ Examples of usage:
 - `edit 1 n/Jane Doe l/Secondary 2 sub/Science` Edits the name, academic level and subject of the 1st student to be `Jane Doe`, `Secondary 2` and `Science` respectively.
 - `edit 2 n/Ben Tan` Edits the name of the 2nd student to be `Ben Tan` and leaves the existing `ACADEMIC_LEVEL` and `SUBJECT` untouched.
 
+### Archiving a student: `archive`
+
+Moves an existing student from your active workspace to a separate archival list. This is ideal for managing students who have graduated, discontinued lessons, or are on a long-term break. It keeps your primary `list` uncluttered while ensuring that their historical data (grades, remarks, and fee history) remains preserved.
+
+**Format**: `archive INDEX`
+
+*   The **INDEX** refers to the number assigned to the student in the current **active list** (run `list` to view).
+*   The student will be hidden from the default `list` view and the `upcoming` lessons view.
+*   Archived students can still be found using the `find` command.
+
+**Example of usage**:
+`archive 1`
+
+**Expected behaviour**:
+*   TutorSwift moves the 1st student from the active list to the archive.
+*   A confirmation message displays the archived student's name and details.
+*   **Data integrity**: All previous records (like Grades and Remarks) are kept intact within the archive.
+
+### Unarchiving a student: `unarchive`
+
+Moves a student from the archive back into the active student list. Use this when a former student resumes tuition or when a record was archived by mistake.
+
+**Format**: `unarchive INDEX`
+
+*   The **INDEX** refers to the number assigned to the student in the **archived list** (run `list-archive` to view).
+*   The unarchived student will immediately reappear in the `list` view and their scheduled lessons will again be visible in the `upcoming` view.
+
+**Example of usage**:
+`list-archive` (to find the index)
+`unarchive 2`
+
+**Expected behaviour**:
+*   TutorSwift moves the 2nd student from the archive back to the active list.
+*   A confirmation message is shown.
 
 ### Listing all active students: `list`
 
@@ -95,22 +140,15 @@ Example of usage:
 Expected behaviour:
 - Displays a numbered list of all active students
 - If there are no students, the following message is shown: `Your active student list is currently empty.`
+### Listing archived students: `list-archive`
 
-### Listing all archived students: `list-archive`
+Displays a numbered list of all students currently stored in the archive. Use this command to review historical records or to find the correct index before unarchiving or permanently deleting a record.
 
-Displays all archived students in the system.
+**Format**: `list-archive`
 
-Format: `list-archive`
-
-- Shows all students currently in the active student list.
-- Each student entry includes their name, academic level, and subject.
-
-Example of usage:
-`list - archive`
-
-Expected behaviour:
-- Displays a numbered list of all archived students
-- Each student will be listed as [ARCHIVED]
+**Expected behaviour**:
+*   Displays a list of students with the `[ARCHIVED]` tag.
+*   If the archive is empty, TutorSwift will notify you: `Your archive is currently empty.`
 
 ### Finding students: `find`
 
@@ -156,6 +194,22 @@ Example of usage:
 Expected behaviour:
 - Removes the student from the active list
 - Displays the removed student's details and updated total count of remaining students in the list
+
+### Deleting an archived student: `delete-archive`
+
+Permanently removes a student record from the archive. This command is used to clean up old data that is no longer required even for historical reference.
+
+**Format**: `delete-archive INDEX`
+
+*   The **INDEX** refers to the number in the **archived list**.
+*   **Warning: This action is irreversible.** All associated data, including lesson history, grade records, and remarks, will be permanently deleted from the local storage.
+
+**Example of usage**:
+`delete-archive 1`
+
+**Expected behaviour**:
+*   The student record is purged from the system.
+*   A success message confirms the permanent removal and shows the remaining number of students in the archive.
 
 ### Adding a grade: `grade`
 
@@ -311,6 +365,20 @@ Examples of usage:
 Expected behaviour:
 - The application terminates
 
+## Data Archiving and Persistence
+
+### Automatic Storage
+TutorSwift automatically saves your data after every successful command.
+*   **File Path**: Data is stored at `./data/tutorswift.txt`.
+*   **Auto-loading**: The app automatically loads this file upon startup.
+*   **Safety**: You do not need a "Save" command. Simply use `bye` or exit the terminal.
+
+### Archiving Logic
+The system maintains two distinct lists:
+1.  **Active List**: For your current students.
+2.  **Archive List**: For historical records.
+    This dual-list system ensures high performance and a clean user interface even as your student database grows over the years.
+
 ## FAQ
 
 **Q**: Why does an unpaid month not appear in the student list after running `list`?
@@ -318,24 +386,36 @@ Expected behaviour:
 **A**: This is expected behaviour. Only months that are marked as paid are displayed in the student list. 
 Unpaid months are intentionally not shown to keep the display clean and uncluttered.
 
-**Q**: How do I transfer my data to another computer? 
+**Q**: Where is my data saved?  
+**A**: Inside the `data` folder in the same directory as your `TutorSwift.jar` file.
 
-**A**: {your answer here}
+**Q**: Can I edit the save file manually?  
+**A**: While possible (it's a text file), it is **not recommended** as incorrect formatting may lead to data loss.
+
+**Q**: How do I move TutorSwift to another computer?  
+**A**: Copy the `TutorSwift.jar` file and the entire `data` folder to the new machine.
 
 ## Command Summary
 
 {Give a 'cheat sheet' of commands here}
 
-| Action         | Format                                                          | Examples                                            |
-|----------------|-----------------------------------------------------------------|-----------------------------------------------------|
-| Edit           | `edit INDEX [n/NAME] [l/ACADEMIC_LEVEL] [sub/SUBJECT]`          | `edit 1 n/Jane Doe l/Secondary 2 sub/Science`       |
-| Delete         | `delete INDEX`                                                  | `delete 1`                                          |
-| Add Grade      | `grade INDEX m/ASSESSMENT g/SCORE`                              | `grade 1 m/Midterm g/85`                            |
-| Add Remark     | `remark INDEX r/REMARK`                                         | `remark 1 r/Very hardworking student`               |
-| Schedule       | `schedule n/NAME day/DAY_OF_WEEK start/START_TIME end/END_TIME` | `schedule n/Alice day/Monday start/10:00 end/12:00` |
-| Upcoming       | `upcoming`                                                      | -                                                   |
-| Set Fee        | `fee INDEX f/AMOUNT`                                            | `fee 1 f/50`                                        |
-| Mark as Paid   | `paid INDEX ym/YYYY-MM`                                         | `paid 1 ym/2026-04`                                 |
+| Action | Format                                                          | Examples                                            |
+|-------|-----------------------------------------------------------------|-----------------------------------------------------|
+| Add Student | `add n/NAME l/LEVEL sub/SUBJECT` | `add n/John Doe l/Secondary 2 sub/Math` |
+| List Active | `list` | `list` |
+| Edit Student | `edit INDEX [n/NAME] [l/LEVEL] [sub/SUBJECT]` | `edit 1 n/Jane Doe l/Secondary 2 sub/Science` |
+| Delete Active | `delete INDEX` | `delete 1` |
+| Find | `find [n/NAME] [sub/SUBJECT] [l/LEVEL]` | `find n/John sub/Math` |
+| Archive | `archive INDEX` | `archive 1` |
+| List Archive | `list-archive` | `list-archive` |
+| Unarchive | `unarchive INDEX` | `unarchive 1` |
+| Delete Archive | `delete-archive INDEX` | `delete-archive 1` |
+| Add Grade | `grade INDEX m/ASSESSMENT g/SCORE`                              | `grade 1 m/Midterm g/85`                            |
+| Add Remark | `remark INDEX r/REMARK`                                         | `remark 1 r/Very hardworking student`               |
+| Schedule | `schedule n/NAME day/DAY_OF_WEEK start/START_TIME end/END_TIME` | `schedule n/Alice day/Monday start/10:00 end/12:00` |
+| Upcoming | `upcoming`                                                      | -                                                   |
+| Set Fee | `fee INDEX f/AMOUNT`                                            | `fee 1 f/50`                                        |
+| Mark as Paid | `paid INDEX ym/YYYY-MM`                                         | `paid 1 ym/2026-04`                                 |
 | Mark as Unpaid | `unpaid INDEX ym/YYYY-MM`                                       | `unpaid 1 ym/2026-04`                               |
-| Exit           | `bye`                                                           | -                                                   |
+| Exit  | `bye`                                                           | -                                                   |
 
