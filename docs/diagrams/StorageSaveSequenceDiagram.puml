@@ -16,29 +16,27 @@ deactivate StudentList
 Command --> Main
 deactivate Command
 
-note over Main : If c.isExit() is false
+opt c.isExit() is false
+    Main -> Storage : save(students)
+    activate Storage
 
-Main -> Storage : save(students)
-activate Storage
+    Storage -> StudentList : getAllActive()
+    activate StudentList
+    StudentList --> Storage : activeStudents
+    deactivate StudentList
 
-Storage -> StudentList : getAllActive()
-activate StudentList
-StudentList --> Storage : activeStudents
-deactivate StudentList
+    Storage -> StudentList : getAllArchived()
+    activate StudentList
+    StudentList --> Storage : archivedStudents
+    deactivate StudentList
 
-Storage -> StudentList : getAllArchived()
-activate StudentList
-StudentList --> Storage : archivedStudents
-deactivate StudentList
+    loop for every student in both lists
+        Storage -> Storage : encodeToPipeFormat(s)
+    end
 
-loop for every student in both lists
-    Storage -> Storage : encodeToPipeFormat(s)
+    Storage -> Storage : writeToFile()
+    Storage --> Main
+    deactivate Storage
 end
 
-Storage -> Storage : writeToFile()
-Storage --> Main
-deactivate Storage
-
-[<-- Main
-deactivate Main
 @enduml
