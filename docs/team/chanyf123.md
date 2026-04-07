@@ -31,6 +31,7 @@ TutorSwift is a desktop application used for private tutors to manage their stud
 * **Contributions to the Developer Guide (DG):**
     * Authored the implementation details and design considerations for the `edit`, `schedule` and `upcoming` feature.
     * Authored the Table of contents and Appendix (project scope, user stories, non-functional requirements, glossary and manual testing instructions)
+    * Added Architecture Diagram.
     * Added the following UML diagrams:
         * Sequence Diagram for `edit`, `schedule` and `upcoming` execution.
 

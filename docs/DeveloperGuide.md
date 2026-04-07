@@ -34,6 +34,10 @@
 
 ### System Architecture
 
+![Architecture diagram](images/ArchitectureDiagram.png)
+
+The **Architecture Diagram** given above explains the high-level design of the TutorSwift App.
+
 Given below is a quick overview of the main components and how they interact with each other.
 
 #### Main components of the architecture

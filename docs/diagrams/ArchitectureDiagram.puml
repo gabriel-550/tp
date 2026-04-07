@@ -1,0 +1,40 @@
+@startuml
+!include <office/Concepts/globe_internet>
+!include <office/Concepts/documents>
+!include <office/Users/user>
+skinparam componentStyle rectangle
+
+actor User
+database "tutorswift.txt\n(File)" as File
+
+package "TutorSwift Architecture" {
+    component UI #1D8900
+    component Logic #3333C4
+    component Model #9D0012
+    component Storage #A38200
+    component Main #gray
+    component Commons #gray
+}
+
+User ..> UI
+UI -> Logic
+UI -right-> Model
+Logic -right-> Model
+Logic -down-> Storage
+Storage -right-> File
+
+Main ..> UI
+Main ..> Logic
+Main ..> Model
+Main ..> Storage
+
+UI -[hidden]down- Commons
+Logic -[hidden]down- Commons
+Model -[hidden]down- Commons
+Storage -[hidden]down- Commons
+
+Commons .up.> UI
+Commons .up.> Logic
+Commons .up.> Model
+Commons .up.> Storage
+@enduml
