@@ -1,2 +1,25 @@
-mat | sec 1 | math | false | EMPTY|EMPTY|NONE | 0:NONE
-tom | sec 1 | math | true | EMPTY|EMPTY|NONE | 0:NONE
+Alice Tan | Secondary 3 | E-Math | false | WA1:85,Midterms:88|MONDAY:15:00:17:00|Excellent progress in algebra. | 50:2026-03,2026-04
+Bob Lee | Secondary 4 | A-Math | false | WA1:72|TUESDAY:16:00:18:00|Needs to practice calculus formulas. | 60:2026-04
+Charlie Lim | Primary 5 | Science | false | CA1:90|WEDNESDAY:14:30:16:00|NONE | 40:NONE
+Diana Wong | JC 1 | H2 Physics | false | BlockTest:65|THURSDAY:17:00:19:00|Struggling with quantum physics concepts. | 80:2026-03
+Ethan Chen | Primary 6 | English | false | Prelims:80|FRIDAY:15:00:16:30|NONE | 45:NONE
+Hannah Koh | JC 2 | H2 Chemistry | false | EMPTY|EMPTY|NONE | 0:NONE
+Ian Ong | Primary 4 | Math | false | EMPTY|EMPTY|NONE | 0:NONE
+Jasmine Ho | Secondary 4 | Pure Biology | false | EMPTY|EMPTY|NONE | 0:NONE
+Kevin Teo | Secondary 3 | English | false | EMPTY|EMPTY|NONE | 0:NONE
+Lily Chua | Primary 6 | Math | false | EMPTY|EMPTY|NONE | 0:NONE
+Marcus Toh | JC 1 | H2 Economics | false | EMPTY|EMPTY|NONE | 0:NONE
+Natalie Sim | Secondary 2 | Literature | false | EMPTY|EMPTY|NONE | 0:NONE
+Oliver Yeo | Primary 5 | English | false | EMPTY|EMPTY|NONE | 0:NONE
+Penelope Quek | Secondary 4 | Physics | false | EMPTY|EMPTY|NONE | 0:NONE
+Quinn Seah | JC 2 | H2 Math | false | EMPTY|EMPTY|NONE | 0:NONE
+Rachel Phua | Primary 4 | Science | false | EMPTY|EMPTY|NONE | 0:NONE
+Samuel Low | Secondary 3 | Chemistry | false | EMPTY|EMPTY|NONE | 0:NONE
+Tiffany Goh | Secondary 1 | Math | false | EMPTY|EMPTY|NONE | 0:NONE
+Victoria Tan | JC 1 | H1 General Paper | false | EMPTY|EMPTY|NONE | 0:NONE
+Xavier Liew | Primary 5 | Math | false | EMPTY|EMPTY|NONE | 0:NONE
+Umar bin Osman | Primary 6 | Science | true | EMPTY|EMPTY|NONE | 0:NONE
+William Cheong | Secondary 4 | E-Math | true | EMPTY|EMPTY|NONE | 0:NONE
+Yvonne Neo | Secondary 2 | Science | true | EMPTY|EMPTY|NONE | 0:NONE
+George Tay | Secondary 2 | History | true | EMPTY|SUNDAY:13:00:15:00|NONE | 0:NONE
+Fiona Ng | Secondary 1 | Geography | true | EMPTY|SATURDAY:10:00:12:00|Very attentive during class. | 0:NONE
