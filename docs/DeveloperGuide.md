@@ -67,6 +67,9 @@ The API of this component is specified in Ui.java.
 - Shows errors passed up from the Logic layer `showError(String)`.
 - Manages lifecycle of input resources`close()`, and prints startup/exit messages `showWelcome(), showExit()`.
 
+![Class diagram — UI component](images/LogicSequenceDiagram.png)
+Class diagram for the structure of the Ui component
+
 ---
 
 ### Logic Component
