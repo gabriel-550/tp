@@ -66,9 +66,11 @@ It is designed to streamline administrative tasks such as tracking student perfo
 
 - Documented the implementation details of the `delete`, `fee`, `paid` and `unpaid` features.
 
-- Added sequence diagrams for each feature to show interactions between system components and the operations.
+- Added sequence diagrams for each `delete`, `fee`, `paid` and `unpaid` feature to show interactions between system components and the operations.
 
 - Created example usage scenarios and documented design considerations.
+
+- Improved the sequence diagram for Logic component
 
 ---
 

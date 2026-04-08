@@ -50,8 +50,10 @@ Given below is a quick overview of the main components and how they interact wit
 
 **How the architecture components interact with each other**
 
-The Sequence Diagram below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.
+The Sequence Diagram below shows how the components interact with each other for the scenario where the user issues the command `delete 1`.  
+
 ![Sequence diagram — delete command](images/ArchitectureSequenceDiagram.png)
+
 ---
 
 ### UI Component
@@ -60,8 +62,10 @@ The API of this component is specified in Ui.java.
 #### Structure of the UI component
 - Console-based single window: Ui is a single presentation class that centralises all input/output responsibilities `welcome, prompts, formatted results, error messages, dividers`.
 - Presentation helpers: small private helpers `e.g., printStudentDetails` keep formatting consistent across different showXxx methods.
-- Constants: visual strings `logo, dividers, messages` are kept as constants inside Ui so layout/text changes are localised.
-- ![Storage Class Diagram](images/UiComponentClassDiagram.png)
+- Constants: visual strings `logo, dividers, messages` are kept as constants inside Ui so layout/text changes are localised.  
+
+![Storage Class Diagram](images/UiComponentClassDiagram.png)
+
 ####  What the UI component does
 - Reads raw input from System.in via readUserInput().
 - Displays results for domain operations `add, edit, delete, archive, schedule, fee updates, find, upcoming lessons`.
@@ -69,6 +73,7 @@ The API of this component is specified in Ui.java.
 - Manages lifecycle of input resources`close()`, and prints startup/exit messages `showWelcome(), showExit()`.
 
 ![Class diagram — UI component](images/UiClassDiagram.png)
+
 Class diagram for the structure of the Ui component
 
 ---
@@ -90,8 +95,8 @@ Command execution is specified by `command.Command` `execute(StudentList, Ui) an
 - Execute the returned command via `command.execute(students, ui)`, which performs model updates and calls `Ui` to display results.
 - Persist: the caller (main loop) checks `isExit()` and, if not exiting, calls `Storage.save(students)`.
 
-![Sequence diagram — delete command](images/LogicSequenceDiagram.png)
-Sequence diagram for the sample execution of `delete` command
+![Sequence diagram — delete command](images/LogicSequenceDiagram.png)  
+Sequence diagram for the sample execution of `delete 1` command
 
 #### Design notes
 - Parser is syntax/validation only;  `Command` objects encapsulate execution and interact with the Model.
@@ -373,7 +378,8 @@ Option 1 was chosen for better modularity and maintainability.
 #### Notes
 
 - Grades are stored as a list of `Grade` objects
-- Duplicate assessments are allowed (no validation enforced)
+- Duplicate assessments are allowed (no validation enforced)  
+  
 ---
 
 ### Find Feature
@@ -482,7 +488,10 @@ The following sequence diagram shows how a list operation executes through the o
 * **`FeeRecord`**: tracks monthly payment status for a student.
 
 #### Notes
-- Implementation for showing Archived student list is similar and hence ommitted.
+- Implementation for showing Archived student list is similar and hence omitted.  
+  
+---
+
 ### Archive Student Feature
 
 #### Implementation
@@ -793,40 +802,52 @@ Given below are instructions to test the app manually.
 ### Deleting an active student
 
 - Prerequisites: At least one student in the active list. Use `list` to verify index of current active students.
+
 - Test case: `delete 1`  
   Expected outcome: First active student is removed. Success message shows deleted student's details and updated total student count.
+
 - Test case: `delete 0`  
   Expected outcome: No student is removed. Error details shown in the status message.
+
 - Other incorrect delete commands to try: `delete`, `delete -5`, `delete abc`  
   Expected outcome: Similar to previous.
 
 ### Setting a student's per-lesson fee
 
 - Prerequisites: At least one active student in the list. Use `list` to verify.
+
 - Test case: `fee 1 f/80`  
   Expected outcome: Fee for the first student is set to $80/lesson. Updated student details shown in the result message.
+
 - Test case: `fee 1 f/0`  
   Expected outcome: Fee is not updated. Error message is shown.
+
 - Other incorrect commands to try: `fee`, `fee 1`, `fee 0 f/50`, `fee 1 f/-50`  
   Expected outcome: Similar to previous.
 
 ### Marking a student's payment as paid
 
 - Prerequisites: At least one active student in the list. Use `list` to verify.
+
 - Test case: `paid 1 ym/2026-03`  
   Expected outcome: First student marked as PAID for March 2026. Updated details shown in result message.
+
 - Test case: `paid 1 ym/2026-13`  
   Expected outcome: Error message is shown. Month value 13 is invalid.
+
 - Other incorrect commands to try: `paid`, `paid 1`, `paid 0 ym/2026-03`  
   Expected outcome: Error message is shown.
 
 ### Marking a student's payment as unpaid
 
 - Prerequisites: At least one active student previously marked as paid for a month. Use `paid 1 ym/2026-03` to set up.
+
 - Test case: `unpaid 1 ym/2026-03`  
   Expected outcome: March 2026 removed from the student's paid months. Updated details shown in result message.
+
 - Test case: `unpaid 1`  
   Expected outcome: Error message is shown. Missing `ym/` prefix.
+
 - Other incorrect commands to try: `unpaid`, `unpaid 1 ym/2026-13`, `unpaid 0 ym/2026-03`  
   Expected outcome: Error message is shown.
 

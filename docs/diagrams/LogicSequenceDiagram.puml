@@ -1,57 +1,54 @@
 @startuml
 hide footbox
-actor User
-participant ":Ui" as UI
-participant ":Parser" as P
-participant ":DeleteCommand" as DC
-participant ":StudentList" as SL
-participant ":Student" as S
+skinparam ArrowFontStyle normal
+
 participant ":TutorSwift" as TS
-participant ":Storage" as ST
+participant ":Parser" as Parser
+participant ":DeleteCommand" as DC
+participant "students:StudentList" as SL
+participant "ui:Ui" as Ui
 
-User -> UI : enter "delete 1"
-activate UI
+[-> TS : execute("delete 1")
+activate TS
 
-UI -> P : parseUserInput("delete 1")
-activate P
+TS -> Parser : parseUserInput("delete 1")
+activate Parser
 
-P -> P : parseDelete("1")
-note right of P : validate index
-P --> DC : new DeleteCommand(index=1)
+create DC
+Parser -> DC : DeleteCommand(index)
 activate DC
-deactivate P
-
-UI -> DC : execute(students, ui)
-activate DC
-
-DC -> SL : deleteActiveStudent(0)
-activate SL
-SL --> DC : deletedStudent
-deactivate SL
-
-DC -> S : (deletedStudent).getDetails()
-activate S
-S --> DC : name, subject, level
-deactivate S
-
-DC -> UI : showDeleteSuccess(deletedStudent, students.getActiveSize())
+Parser <-- DC :
 deactivate DC
 
-UI -> TS : return control to main loop
-activate TS
-TS -> ST : save(students)
-activate ST
-ST --> TS : saveAck
-deactivate ST
-deactivate TS
+TS <-- Parser : deleteCommand
+deactivate Parser
 
-UI -> User : prints deletion confirmation
-deactivate UI
+TS -> DC : execute(students, ui)
+activate DC
 
-alt parse or execution error
-    P --> UI : throws TutorSwiftException(message)
-    UI -> User : showError(message)
+alt invalid index
+    DC --> TS : throws TutorSwiftException(message)
+else valid index
+    DC -> SL : getActiveStudent(0)
+    activate SL
+    SL --> DC : deletedStudent
+    deactivate SL
+
+    DC -> SL : deleteActiveStudent(0)
+    activate SL
+    SL --> DC :
+    deactivate SL
+
+    DC -> Ui : showDeleteSuccess(deletedStudent, students.getActiveSize())
+    activate Ui
+    Ui --> DC :
+    deactivate Ui
+
+    DC --> TS :
 end
 
+deactivate DC
 destroy DC
+
+deactivate TS
 @enduml
