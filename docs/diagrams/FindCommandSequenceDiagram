@@ -1,50 +1,44 @@
 @startuml
 hide footbox
-actor User
-participant ":FindCommand" as FC
-participant ":StudentList" as SL
-participant ":Ui" as UI
-participant ":Student" as S
+skinparam Style strictuml
+skinparam ArrowFontStyle normal
 
-User -> FC : execute(students, ui)
+participant ":FindCommand" as FC
+participant "students:StudentList" as SL
+participant "s:Student" as S
+participant "ui:Ui" as UI
+
+[-> FC : execute(students, ui)
 activate FC
 
 FC -> SL : getAllActive()
 activate SL
-SL --> FC : activeList
-deactivate SL
+return activeList
 
-FC -> FC : searchList(activeList, results)
-activate FC
-loop for each student in activeList
-    FC -> S : getName()/getSubject()/getAcademicLevel()
+loop for each student s in activeList
+    FC -> S : getName()
     activate S
-    S --> FC : values
-    deactivate S
+    return name
+    FC -> S : getSubject()
+    activate S
+    return subject
+    FC -> S : getAcademicLevel()
+    activate S
+    return level
+    note right: if match with find parameters, add to results
 end
-deactivate FC
 
 FC -> SL : getAllArchived()
 activate SL
-SL --> FC : archivedList
-deactivate SL
+return archivedList
 
-FC -> FC : searchList(archivedList, results)
-activate FC
-loop for each student in archivedList
-    FC -> S : getName()/getSubject()/getAcademicLevel()
-    activate S
-    S --> FC : values
-    deactivate S
-end
-deactivate FC
+note over FC, S : Repeat search loop for archivedList
 
 FC -> UI : showFindResults(results)
 activate UI
 deactivate UI
 
-FC --> User
-
+[<-- FC
 deactivate FC
 destroy FC
 @enduml
