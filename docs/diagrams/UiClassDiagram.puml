@@ -1,0 +1,34 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class Ui {
+  - scanner: Scanner
+
+  + showWelcome()
+  + readUserInput(): String
+  + showAddSuccess(Student, int)
+  + showEditSuccess(Student)
+  + showDeleteSuccess(Student, int)
+  + showError(String)
+
+  + showStudentList(StudentList)
+  + showArchivedList(StudentList)
+
+  + showLessonScheduled(String, Lesson)
+  + showUpcomingLessons(List<RelativeLesson>)
+
+  + showExit()
+  + close()
+}
+
+class Student
+class StudentList
+class Lesson
+class RelativeLesson
+
+Ui ..> Student
+Ui ..> StudentList
+Ui ..> Lesson
+Ui ..> RelativeLesson
+
+@enduml

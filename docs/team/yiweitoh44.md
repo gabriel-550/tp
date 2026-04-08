@@ -46,6 +46,7 @@ It is designed to streamline administrative tasks such as tracking student perfo
 - Wrote a step-by-step usage scenario to clearly illustrate how the `grade` command is processed within the system.
 - Added a sequence diagram to visualise the interaction between system components during a grade operation.
 - Provided design considerations comparing alternative approaches.
+- Added a class diagram for Ui component.
 
 ### Contributions to team-based tasks
 
