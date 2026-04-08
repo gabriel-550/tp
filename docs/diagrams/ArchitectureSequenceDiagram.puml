@@ -1,41 +1,34 @@
 @startuml
 hide footbox
-title System Architecture — delete command (simplified)
+skinparam shadowing false
+title System Architecture Overview
 
 actor User
-participant "Ui" as UI
-participant "Logic/Parser" as LOGIC
-participant "Command" as CMD
-participant "Model" as MODEL
-participant "Storage" as ST
+participant ":Ui" as UI
+participant ":Parser" as LOGIC
+participant ":Model" as MODEL
+participant ":Storage" as ST
 
-User -> UI : enter "delete 1"
+User -> UI : "delete 1"
 activate UI
 
-UI -> LOGIC : parseUserInput("delete 1")
+UI -> LOGIC : parse & execute
 activate LOGIC
-LOGIC --> CMD : new DeleteCommand
+
+LOGIC -> MODEL : update data
+activate MODEL
+MODEL --> LOGIC
+deactivate MODEL
+
+LOGIC -> ST : save data
+activate ST
+ST -> ST : write to file
+ST --> LOGIC
+deactivate ST
+
+LOGIC --> UI
 deactivate LOGIC
 
-UI -> CMD : execute(model, ui)
-activate CMD
-
-CMD -> MODEL : deleteActiveStudent(0)
-MODEL --> CMD : deletedStudent
-
-CMD -> UI : showDeleteSuccess(deletedStudent)
-deactivate CMD
-
-UI -> ST : save(model)
-ST --> UI :
-
-UI --> User : prints confirmation
+UI --> User : success message
 deactivate UI
-
-alt parse or execution error
-    LOGIC --> UI : throws Exception
-    UI --> User : showError(message)
-end
-
-destroy CMD
 @enduml

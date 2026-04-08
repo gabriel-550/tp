@@ -1,0 +1,33 @@
+@startuml
+hide footbox
+skinparam Style strictuml
+skinparam ArrowFontStyle normal
+
+participant ":ListCommand" as LC
+participant "students:StudentList" as SL
+participant "ui:Ui" as UI
+
+[-> LC : execute(students, ui)
+activate LC
+
+LC -> UI : showStudentList(students)
+activate UI
+
+    UI -> SL : getActiveSize()
+    activate SL
+    return activeSize
+
+    opt activeSize > 0
+        loop for i = 0 to activeSize - 1
+            UI -> SL : getActiveStudent(i)
+            activate SL
+            return student
+        end
+    end
+
+deactivate UI
+
+[<-- LC
+deactivate LC
+destroy LC
+@enduml
