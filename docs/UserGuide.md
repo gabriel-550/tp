@@ -167,6 +167,7 @@ Example of usage:
 Expected behaviour:
 - Displays a numbered list of all active students
 - If there are no students, the following message is shown: `Your active student list is currently empty.`
+
 ### Listing archived students: `list-archive`
 
 Displays a numbered list of all students currently stored in the archive. Use this command to review historical records or to find the correct index before unarchiving or permanently deleting a record.

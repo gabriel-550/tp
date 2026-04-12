@@ -64,17 +64,13 @@ The API of this component is specified in Ui.java.
 - Presentation helpers: small private helpers `e.g., printStudentDetails` keep formatting consistent across different showXxx methods.
 - Constants: visual strings `logo, dividers, messages` are kept as constants inside Ui so layout/text changes are localised.  
 
-![Storage Class Diagram](images/UiComponentClassDiagram.png)
+![UI Class Diagram](images/UiComponentClassDiagram.png)
 
 ####  What the UI component does
 - Reads raw input from System.in via readUserInput().
 - Displays results for domain operations `add, edit, delete, archive, schedule, fee updates, find, upcoming lessons`.
 - Shows errors passed up from the Logic layer `showError(String)`.
 - Manages lifecycle of input resources`close()`, and prints startup/exit messages `showWelcome(), showExit()`.
-
-![Class diagram — UI component](images/UiClassDiagram.png)
-
-Class diagram for the structure of the Ui component
 
 ---
 
@@ -87,7 +83,7 @@ Command execution is specified by `command.Command` `execute(StudentList, Ui) an
 - Parser: single entry point `parseUserInput(String)` that tokenises the command word and delegates to `parseXxx` helpers (for example `parseAdd`, `parseEdit`, `parseDelete`).
 - Command hierarchy: abstract Command defines `execute(StudentList, Ui)` and `isExit()`. Concrete subclasses (for example `AddCommand`, `DeleteCommand`) implement behaviour.
 - Parsing helpers: `getValueByPrefix(...)` and `parseIndex(...)` encapsulate common parsing and validation logic.
-  ![Storage Class Diagram](images/LogicComponentClassDiagram.png)
+  ![Logic Class Diagram](images/LogicComponentClassDiagram.png)
 ####  What the Logic component does
 - Tokenise raw user input into `commandName` and `arguments`.
 - Dispatch to the appropriate `parseXxx` helper based on `commandName`.
@@ -121,7 +117,7 @@ It defines the core entities (`Student`, `StudentList`, `Lesson`, `FeeRecord`, e
 - `Lesson`: represents a scheduled lesson with day and time slots.
 - `Grade`: represents an academic achievement, consisting of an assessment name (e.g., "Midterm") and a numerical score
 - `FeeRecord`: tracks monthly payment status for a student.
-  ![Storage Class Diagram](images/ModelComponentClassDiagram.png)
+  ![Model Class Diagram](images/ModelComponentClassDiagram.png)
 #### Interactions
 - Logic commands call `StudentList` methods to mutate state.
 - Storage serializes and deserializes `StudentList` and `Student` objects to/from disk.
@@ -465,7 +461,7 @@ Step 6. The `Ui` iterates through the list, printing a formatted, numbered list 
 
 The following sequence diagram shows how a list operation executes through the objects:
 
-![Archive Sequence Diagram](images/ShowActiveListSequenceDiagram.png)
+![List Sequence Diagram](images/ShowActiveListSequenceDiagram.png)
 #### Design Considerations
 
 **Aspect: How the student list is passed to the UI.**
