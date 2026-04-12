@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import seedu.tutorswift.Student;
 import seedu.tutorswift.StudentList;
+import seedu.tutorswift.TutorSwiftException;
 import seedu.tutorswift.Ui;
 
 import java.io.ByteArrayOutputStream;
@@ -36,7 +37,7 @@ class AddCommandTest {
      * Tests adding a single student and verifies all attributes are stored correctly.
      */
     @Test
-    void execute_validStudent_success() {
+    void execute_validStudent_success() throws TutorSwiftException {
         Student student = new Student("John Doe", "Secondary 4", "Mathematics");
         AddCommand command = new AddCommand(student);
         command.execute(studentList, ui);
@@ -55,7 +56,7 @@ class AddCommandTest {
      * Tests adding multiple students to ensure the list tracks them correctly.
      */
     @Test
-    void execute_multipleStudents_listSizeIncrements() {
+    void execute_multipleStudents_listSizeIncrements() throws TutorSwiftException{
         AddCommand cmd1 = new AddCommand(new Student("Alice", "P6", "English"));
         AddCommand cmd2 = new AddCommand(new Student("Bob", "S1", "Science"));
 
@@ -72,7 +73,7 @@ class AddCommandTest {
      * This verifies that the command handles the data object as provided.
      */
     @Test
-    void execute_studentWithSpacesInName_storedCorrectly() {
+    void execute_studentWithSpacesInName_storedCorrectly() throws TutorSwiftException{
         String nameWithSpaces = "Mary Ann Tan";
         Student student = new Student(nameWithSpaces, "JC 1", "H2 Physics");
         AddCommand command = new AddCommand(student);
@@ -81,4 +82,29 @@ class AddCommandTest {
         assertEquals(nameWithSpaces, studentList.getActiveStudent(0).getName());
     }
 
+    /**
+     * Tests that adding a student with a duplicate name throws a TutorSwiftException.
+     * Uses assertEquals to verify the exception message.
+     */
+    @Test
+    void execute_duplicateName_throwsException() throws TutorSwiftException {
+        Student original = new Student("Alice", "P6", "English");
+        Student duplicate = new Student("Alice", "S1", "Science");
+
+        AddCommand cmd1 = new AddCommand(original);
+        AddCommand cmd2 = new AddCommand(duplicate);
+
+        cmd1.execute(studentList, ui);
+
+        try {
+            cmd2.execute(studentList, ui);
+            assertTrue(false, "Exception should have been thrown for duplicate name");
+        } catch (TutorSwiftException e) {
+            assertEquals("A student with the name 'Alice' already exists in your records.",
+                    e.getMessage(),
+                    "Exception message should match the expected duplicate error");
+        }
+
+        assertEquals(1, studentList.getActiveSize(), "List size should remain 1 after failed duplicate addition");
+    }
 }

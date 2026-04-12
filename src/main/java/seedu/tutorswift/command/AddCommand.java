@@ -2,6 +2,7 @@ package seedu.tutorswift.command;
 
 import seedu.tutorswift.Student;
 import seedu.tutorswift.StudentList;
+import seedu.tutorswift.TutorSwiftException;
 import seedu.tutorswift.Ui;
 
 /**
@@ -9,6 +10,7 @@ import seedu.tutorswift.Ui;
  */
 public class AddCommand extends Command {
     private final Student studentToAdd;
+
 
     /**
      * Constructs an {@code AddCommand} with the specified student.
@@ -21,20 +23,31 @@ public class AddCommand extends Command {
     }
 
     /**
-     * Executes the add command by adding the student to the student list
-     * and displaying a success message.
+     * Executes the add command.
+     * Checks for duplicate student names across active and archived lists before
+     * adding the new student to the student list and displaying a success message.
      *
      * @param students The list of students where the new student will be added.
      * @param ui The user interface used to show the confirmation message.
+     * @throws TutorSwiftException If a student with the same name already exists.
      */
+
     @Override
-    public void execute(StudentList students, Ui ui) {
+    public void execute(StudentList students, Ui ui) throws TutorSwiftException {
+        assert studentToAdd != null : "Student to add should not be null";
         assert students != null : "StudentList should not be null";
         assert ui != null : "Ui should not be null";
+
+        if (students.hasStudentWithName(studentToAdd.getName())) {
+            throw new TutorSwiftException("A student with the name '" +
+                    studentToAdd.getName() + "' already exists in your records.");
+        }
+
         int initialSize = students.getActiveSize();
         students.addStudent(studentToAdd);
 
         assert students.getActiveSize() == initialSize + 1 : "Active list size should increase by 1";
         ui.showAddSuccess(studentToAdd, students.getActiveSize());
     }
+
 }

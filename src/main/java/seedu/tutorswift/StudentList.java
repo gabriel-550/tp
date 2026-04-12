@@ -31,6 +31,20 @@ public class StudentList {
     }
 
     /**
+     * Checks if a student name already exists in either the active or archived list.
+     * Case-insensitive.
+     */
+    public boolean hasStudentWithName(String name) {
+        for (Student s : activeStudents) {
+            if (s.getName().equalsIgnoreCase(name)) return true;
+        }
+        for (Student s : archivedStudents) {
+            if (s.getName().equalsIgnoreCase(name)) return true;
+        }
+        return false;
+    }
+
+    /**
      * Moves a student from active list to archived list.
      *
      * @param index Zero-based index in active list.
