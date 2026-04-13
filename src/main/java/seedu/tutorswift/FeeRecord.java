@@ -8,15 +8,17 @@ import java.util.List;
 import java.time.DayOfWeek;
 
 /**
- * Tracks the per-lesson fee and paid months for a student.
+ * Tracks the per-lesson fee, paid and unpaid months for a student.
  */
 public class FeeRecord {
     private int feePerLesson;
     private final ArrayList<YearMonth> paidMonths;
+    private final ArrayList<YearMonth> unpaidMonths;
 
     public FeeRecord() {
         this.feePerLesson = 0;
         this.paidMonths = new ArrayList<>();
+        this.unpaidMonths = new ArrayList<>();
     }
 
     public int getFeePerLesson() {
@@ -31,59 +33,97 @@ public class FeeRecord {
         return paidMonths;
     }
 
+    public ArrayList<YearMonth> getUnpaidMonths() {
+        return unpaidMonths;
+    }
+
     public boolean isPaidForMonth(YearMonth month) {
         return paidMonths.contains(month);
     }
 
     /**
-     * Marks the given month as paid. Ignores if already marked.
+     * Marks the given month as paid.
+     * Also removes it from unpaidMonths if it was previously marked unpaid.
      */
     public void markPaid(YearMonth month) {
         if (!paidMonths.contains(month)) {
             paidMonths.add(month);
         }
+        unpaidMonths.remove(month);
     }
 
     /**
-     * Removes the given month from paid list. Ignores if not present.
+     * Marks the given month as unpaid explicitly.
+     * Also removes it from paidMonths if it was previously marked paid.
      */
     public void markUnpaid(YearMonth month) {
         paidMonths.remove(month);
+        if (!unpaidMonths.contains(month)) {
+            unpaidMonths.add(month);
+        }
     }
 
     /**
      * Converts fee data to save format.
-     * Example: "50:2026-01,2026-02" or "50:NONE"
      */
     public String toSaveFormat() {
+        String paidPart;
         if (paidMonths.isEmpty()) {
-            return feePerLesson + ":NONE";
-        }
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < paidMonths.size(); i++) {
-            sb.append(paidMonths.get(i).toString());
-            if (i < paidMonths.size() - 1) {
-                sb.append(",");
+            paidPart = "NONE";
+        } else {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < paidMonths.size(); i++) {
+                sb.append(paidMonths.get(i).toString());
+                if (i < paidMonths.size() - 1) {
+                    sb.append(",");
+                }
             }
+            paidPart = sb.toString();
         }
-        return feePerLesson + ":" + sb;
+
+        String unpaidPart;
+        if (unpaidMonths.isEmpty()) {
+            unpaidPart = "NONE";
+        } else {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < unpaidMonths.size(); i++) {
+                sb.append(unpaidMonths.get(i).toString());
+                if (i < unpaidMonths.size() - 1) {
+                    sb.append(",");
+                }
+            }
+            unpaidPart = sb.toString();
+        }
+
+        return feePerLesson + ":" + paidPart + ":" + unpaidPart;
     }
 
     /**
      * Parses from save format string.
-     * Example input: "50:2026-01,2026-02" or "50:NONE"
      */
     public static FeeRecord fromSaveFormat(String raw) {
-        String[] splitParts = raw.split(":", 2);
+        String[] splitParts = raw.split(":", 3);
         int fee = Integer.parseInt(splitParts[0]);
         FeeRecord record = new FeeRecord();
         record.setFeePerLesson(fee);
-        if (!splitParts[1].equals("NONE")) {
+
+        if (splitParts.length >= 2 && !splitParts[1].equals("NONE")) {
             String[] months = splitParts[1].split(",");
             for (String m : months) {
                 record.markPaid(YearMonth.parse(m.trim()));
             }
         }
+
+        if (splitParts.length >= 3 && !splitParts[2].equals("NONE")) {
+            String[] months = splitParts[2].split(",");
+            for (String m : months) {
+                YearMonth ym = YearMonth.parse(m.trim());
+                if (!record.unpaidMonths.contains(ym)) {
+                    record.unpaidMonths.add(ym);
+                }
+            }
+        }
+
         return record;
     }
 
@@ -91,20 +131,34 @@ public class FeeRecord {
     public String toString() {
         String feeStr = (feePerLesson == 0) ? "Not set" : "$" + feePerLesson + "/lesson";
 
-        if (paidMonths.isEmpty()) {
+        if (paidMonths.isEmpty() && unpaidMonths.isEmpty()) {
             return "Fee: " + feeStr + " | No payments recorded";
         }
 
-        StringBuilder paidStr = new StringBuilder();
-        for (int i = 0; i < paidMonths.size(); i++) {
-            YearMonth ym = paidMonths.get(i);
-            paidStr.append(ym.getMonth()).append(" ").append(ym.getYear()).append(": [PAID]");
-            if (i < paidMonths.size() - 1) {
-                paidStr.append(", ");
+        ArrayList<YearMonth> allMonths = new ArrayList<>();
+        for (YearMonth ym : paidMonths) {
+            if (!allMonths.contains(ym)) {
+                allMonths.add(ym);
+            }
+        }
+        for (YearMonth ym : unpaidMonths) {
+            if (!allMonths.contains(ym)) {
+                allMonths.add(ym);
+            }
+        }
+        allMonths.sort(null);
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < allMonths.size(); i++) {
+            YearMonth ym = allMonths.get(i);
+            String status = paidMonths.contains(ym) ? "[PAID]" : "[UNPAID]";
+            sb.append(ym.getMonth()).append(" ").append(ym.getYear()).append(": ").append(status);
+            if (i < allMonths.size() - 1) {
+                sb.append(", ");
             }
         }
 
-        return "Fee: " + feeStr + " | " + paidStr.toString();
+        return "Fee: " + feeStr + " | " + sb.toString();
     }
 
     /**

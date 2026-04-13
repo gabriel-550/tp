@@ -23,6 +23,13 @@ opt index valid
     S -> FR : markUnpaid(targetMonth)
     activate FR
     FR -> FR : paidMonths.remove(targetMonth)
+
+    opt month not in unpaidMonths
+
+        FR -> FR : unpaidMonths.add(targetMonth)
+
+    end
+
     FR --> S
     deactivate FR
     S --> UC

@@ -27,8 +27,10 @@ opt index valid
         FR -> FR : paidMonths.add(targetMonth)
     end
 
+    FR -> FR : unpaidMonths.remove(targetMonth)
     FR --> S
     deactivate FR
+
     S --> PC
     deactivate S
 

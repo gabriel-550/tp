@@ -68,21 +68,21 @@ ____________________________________________________________
 ____________________________________________________________
 ____________________________________________________________
  Done! Alice Lim is marked as UNPAID for APRIL 2026.
-    Alice Lim | Secondary 4 | Math | Remark: Needs help with algebra | Fee: $50/lesson | No payments recorded
+    Alice Lim | Secondary 4 | Math | Remark: Needs help with algebra | Fee: $50/lesson | APRIL 2026: [UNPAID]
 ____________________________________________________________
 Got it! I've scheduled a lesson for Alice Lim on MONDAY 15:00 to 17:00
 ____________________________________________________________
 ____________________________________________________________
  Done! I've updated the details for this student:
-    Alice Lim | Secondary 4 | Math | Grades: [Midterm: 85] | Lessons: [MONDAY 15:00 to 17:00] | Remark: Needs help with algebra | Fee: $50/lesson | No payments recorded
+    Alice Lim | Secondary 4 | Math | Grades: [Midterm: 85] | Lessons: [MONDAY 15:00 to 17:00] | Remark: Needs help with algebra | Fee: $50/lesson | APRIL 2026: [UNPAID]
 ____________________________________________________________
 ____________________________________________________________
  Done! I've updated the details for this student:
-    Alice Lim | Secondary 4 | Math | Lessons: [MONDAY 15:00 to 17:00] | Remark: Needs help with algebra | Fee: $50/lesson | No payments recorded
+    Alice Lim | Secondary 4 | Math | Lessons: [MONDAY 15:00 to 17:00] | Remark: Needs help with algebra | Fee: $50/lesson | APRIL 2026: [UNPAID]
 ____________________________________________________________
 ____________________________________________________________
  Done! I've updated the details for this student:
-    Alice Lim | Secondary 4 | Math | Lessons: [MONDAY 15:00 to 17:00] | Fee: $50/lesson | No payments recorded
+    Alice Lim | Secondary 4 | Math | Lessons: [MONDAY 15:00 to 17:00] | Fee: $50/lesson | APRIL 2026: [UNPAID]
 ____________________________________________________________
 ____________________________________________________________
 Here are the matching students:
