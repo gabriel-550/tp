@@ -52,6 +52,7 @@ It is designed to streamline administrative tasks such as tracking student perfo
 
 - Participated in feature planning and discussions
 - Helped test and debug team features
+- Helped edit team demo videos
 
 ### Review/mentoring contributions
 
