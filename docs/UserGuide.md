@@ -117,6 +117,9 @@ Examples of usage:
 - `edit 1 n/Jane Doe l/Secondary 2 sub/Science` Edits the name, academic level and subject of the 1st student to be `Jane Doe`, `Secondary 2` and `Science` respectively.
 - `edit 2 n/Ben Tan` Edits the name of the 2nd student to be `Ben Tan` and leaves the existing `ACADEMIC_LEVEL` and `SUBJECT` untouched.
 
+Remarks:
+- Changing a student's subject will intentionally purge all existing grade records to prevent data inconsistency between the new subject and old assessments. More advanced grade features may be implemented in future versions.
+
 ### Archiving a student: `archive`
 
 Moves an existing student from your active workspace to a separate archival list. This is ideal for managing students who have graduated, discontinued lessons, or are on a long-term break. It keeps your primary `list` uncluttered while ensuring that their historical data (grades, remarks, and fee history) remains preserved.
@@ -256,6 +259,11 @@ Expected behaviour:
 - Grade is stored as [ASSESSMENT:SCORE]
 - Student details will display updated grades
 
+Remarks:
+- The system treats all text following the prefix as a single assessment name so you must strictly follow the format and exclude extra parameters to avoid a not found error.
+- Changing a student's subject will intentionally purge all existing grade records to prevent data inconsistency between the new subject and old assessments. More advanced grade features may be implemented in future versions.
+- The system is designed to assume all grades are entered as a numerical value out of a maximum of 100 and does not currently support custom maximum mark parameters.
+
 ### Removing a grade: `remove-grade`
 
 Removes a grade record from a student.
@@ -274,6 +282,9 @@ Expected behaviour:
 - Student details will display updated grades
 - If the assessment does not exist, an appropriate error message is shown
 
+Remarks:
+- The system treats all text following the prefix as a single assessment name so you must strictly follow the format and exclude extra parameters to avoid a not found error.
+
 ### Adding a remark: `remark`
 
 Adds a remark to a student.
@@ -290,6 +301,9 @@ Example of usage:
 Expected behaviour:
 - Adds or updates the remark for the student
 - Displays updated student details
+
+Remarks:
+- The system is designed to store only one active remark per student at a time so entering a new remark will intentionally override the existing one. More advanced remark features may be implemented in future versions.
 
 ### Removing a remark: `remove-remark`
 
@@ -362,6 +376,10 @@ Example of usage:
 
 - `fee 1 f/50` — Sets the per-lesson fee for student 1 to $50.
 
+Remarks:
+- The system treats all text following the prefix as a single assessment name so you must strictly follow the format and exclude extra parameters to avoid a not found error.
+
+
 ### Marking payment as paid: `paid`
 
 Marks a student's payment as paid for a specified month.
@@ -426,6 +444,10 @@ Examples of usage:
 
 Expected behaviour:
 - The application terminates
+
+Remarks:
+- The bye command is a terminal keyword that triggers an immediate application exit, meaning the system prioritizes the exit signal and intentionally disregards any additional text or parameters typed after it on the same line.
+
 
 ## Data Archiving and Persistence
 
