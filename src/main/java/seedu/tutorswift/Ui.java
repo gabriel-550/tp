@@ -304,7 +304,7 @@ public class Ui {
         System.out.println("----------------------------------");
         System.out.println("Fee Summary for: " + student.getName());
         System.out.println("Month: " + month.getMonth() + " " + month.getYear());
-        System.out.println("Total Amount Due: $" + total);
+        System.out.println("Total Fee: $" + total);
         System.out.println("----------------------------------");
     }
 

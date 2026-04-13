@@ -24,7 +24,7 @@ public class MonthlyIncomeCommandTest {
 
     @Test
     public void execute_emptyStudentList_returnsZero() throws TutorSwiftException {
-        // Equivalence Partitioning: Test the "Empty" boundary
+        // Equivalence Partitioning: Test the empty boundary condition
         MonthlyIncomeCommand command = new MonthlyIncomeCommand(YearMonth.of(2026, 4));
         command.execute(students, ui);
 
@@ -37,7 +37,7 @@ public class MonthlyIncomeCommandTest {
 
     @Test
     public void execute_studentWithNoLessons_returnsZero() throws TutorSwiftException {
-        // Boundary: Student exists but contributes no revenue
+        // Boundary: Student exists but has no scheduled lessons
         Student s = new Student("Bob", "S4", "Math");
         s.getFeeRecord().setFeePerLesson(60);
         students.addStudent(s);
@@ -54,7 +54,7 @@ public class MonthlyIncomeCommandTest {
 
     @Test
     public void execute_multipleStudents_handlesDifferentFeesCorrectly() throws TutorSwiftException {
-        // Full Integration: Two students, different fees, mixed schedules
+        // Each Valid Input At Least Once: Two students, different fees, same schedule
         Student s1 = new Student("Bob", "S4", "Math");
         s1.getFeeRecord().setFeePerLesson(100);
         s1.addLesson(new Lesson(DayOfWeek.MONDAY, LocalTime.of(10, 0), LocalTime.of(12, 0)));
@@ -71,7 +71,27 @@ public class MonthlyIncomeCommandTest {
         for (Student s : students.getAllActive()) {
             total += s.getFeeRecord().calculateMonthlyTotal(s.getLessons(), month);
         }
-        // April 2026 has 4 Mondays. (4*100) + (4*10) = 440
+        // April 2026 has 4 Mondays: (4 * 100) + (4 * 10) = 440
         assertEquals(440, total, "Calculation should correctly aggregate different fees");
     }
+    @Test
+    public void execute_futureDate_returnsZeroIfNoLessons() throws TutorSwiftException {
+        // Setup: Add a student but no lessons
+        Student s = new Student("Future Student", "S5", "Physics");
+        s.getFeeRecord().setFeePerLesson(100);
+        students.addStudent(s);
+
+        // Action: Execute command for a future date
+        YearMonth futureMonth = YearMonth.of(2030, 1);
+        MonthlyIncomeCommand command = new MonthlyIncomeCommand(futureMonth);
+        command.execute(students, ui);
+
+        int total = 0;
+        for (Student student : students.getAllActive()) {
+            total += student.getFeeRecord().calculateMonthlyTotal(student.getLessons(), futureMonth);
+        }
+
+        assertEquals(0, total, "Income should be 0 for a future month with no lessons scheduled");
+    }
+
 }

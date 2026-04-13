@@ -114,4 +114,37 @@ public class FindCommandTest {
         // Empty strings for fields should be treated as invalid
         assertThrows(TutorSwiftException.class, () -> new FindCommand("", "", ""));
     }
+
+    @Test
+    public void execute_findPartialName_returnsExpectedStudent() throws TutorSwiftException {
+        // EP: Testing partial string matches (e.g., searching "John" to find "John Doe")
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        FindCommand cmd = new FindCommand("John", null, null);
+        cmd.execute(students, ui);
+
+        String output = outContent.toString();
+        assertTrue(output.contains("John Doe"));
+        assertFalse(output.contains("Jane Smith"));
+    }
+
+    @Test
+    public void execute_findCaseInsensitive_returnsExpectedStudent() throws TutorSwiftException {
+        // EP: Testing case-insensitivity (e.g., searching "john doe" to find "John Doe")
+        ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        System.setOut(new PrintStream(outContent));
+
+        FindCommand cmd = new FindCommand("jOhN dOe", null, null);
+        cmd.execute(students, ui);
+
+        String output = outContent.toString();
+        assertTrue(output.contains("John Doe"));
+    }
+
+    @Test
+    public void execute_findWhitespaceInput_throwsException() {
+        // Heuristic: Test invalid inputs individually (handling pure whitespace)
+        assertThrows(TutorSwiftException.class, () -> new FindCommand("   ", null, null));
+    }
 }
