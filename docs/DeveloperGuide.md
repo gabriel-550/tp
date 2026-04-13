@@ -205,8 +205,8 @@ The operation is executed through the following sequence:
 
 1. `ScheduleCommand#execute(students, ui)` is invoked.
 
-2. The command retrieves the target student from the `StudentList` using the provided `studentName`.
-If the student is not found, a `TutorSwiftException` is thrown.
+2. The command validates the provided `studentIndex`. It then retrieves the target student from the `StudentList`.
+If the index is out of bounds, a `TutorSwiftException` is thrown.
 
 3. A new `Lesson` object is instantiated using the provided `DayOfWeek`, `startTime`, and `endTime`.
 
@@ -219,11 +219,11 @@ Given below is an example usage scenario and how the schedule mechanism behaves 
 
 Step 1. The user launches the application. The `StudentList` contains an active student named "Alice".
 
-Step 2. The user decides to schedule a 2-hour Math lesson for Alice on Monday morning, and executes the command `schedule Alice day/Monday start/10:00 end/12:00`.
+Step 2. The user decides to schedule a 2-hour Math lesson for Alice(who is at index 1) on Monday morning, and executes the command `schedule 1 day/Monday start/10:00 end/12:00`.
 
-Step 3. The parser interprets the user input and instantiates a `ScheduleCommand` object with `studentName` "Alice", `day` MONDAY, `startTime` 10:00, and `endTime` 12:00.
+Step 3. The parser interprets the user input and instantiates a `ScheduleCommand` object with `studentIndex` 1, `day` MONDAY, `startTime` 10:00, and `endTime` 12:00.
 
-Step 4. The `ScheduleCommand#execute()` method is called. It queries the `StudentList` and successfully retrieves the `Student` object corresponding to "Alice".
+Step 4. The `ScheduleCommand#execute()` method is called. It validates that index 1 is within bounds and retrieves the `Student` object using `getActiveStudent(0)` (accounting for 0-based indexing).
 
 Step 5. The command instantiates a new `Lesson` object with the given day and times.
 
@@ -849,11 +849,15 @@ Given below are instructions to test the app manually.
 
 ### Scheduling and Upcoming Lessons
 
-- Prerequisite: Ensure a student named "John Doe" exists.
+- Prerequisite: Ensure at least one active student exists in the list (e.g., at index 1). Use `list` to verify.
 
-- Test case: `schedule John Doe day/Monday start/14:00 end/16:00`
+- Test case: `schedule 1 day/Monday start/14:00 end/16:00`
 
   Expected outcome: A 2-hour lesson is added to John Doe's profile. A success message is displayed.
+
+- Test case: `schedule -1 day/Monday start/14:00 end/16:00`
+
+  Expected outcome: The system throws an error stating "Index must be a positive integer."
 
 - Test case: upcoming
 

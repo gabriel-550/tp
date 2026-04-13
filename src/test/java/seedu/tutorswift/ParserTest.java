@@ -156,4 +156,17 @@ public class ParserTest {
         // Prefix exists but value is blank
         assertThrows(TutorSwiftException.class, () -> Parser.parseUserInput("find n/  sub/ "));
     }
+
+    @Test
+    public void parseUserInput_scheduleValidInput_returnsScheduleCommand() throws TutorSwiftException {
+        Command result = Parser.parseUserInput("schedule 1 day/MONDAY start/14:00 end/16:00");
+        assertInstanceOf(seedu.tutorswift.command.ScheduleCommand.class, result);
+    }
+
+    @Test
+    public void parseUserInput_scheduleNegativeIndex_throwsException() {
+        TutorSwiftException e = assertThrows(TutorSwiftException.class, () ->
+                Parser.parseUserInput("schedule -1 day/MONDAY start/14:00 end/16:00"));
+        assertEquals("Index must be a positive integer.", e.getMessage());
+    }
 }

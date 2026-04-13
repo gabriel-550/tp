@@ -26,14 +26,14 @@ public class ScheduleCommandTest {
 
     @Test
     public void execute_validStudent_schedulesLessonSuccessfully() throws TutorSwiftException {
-        String testName = "John Doe";
-        Student testStudent = new Student(testName, "Primary 1", "Math");
+        Student testStudent = new Student("John Doe", "Primary 1", "Math");
         students.addStudent(testStudent);
+
 
         DayOfWeek testDay = DayOfWeek.MONDAY;
         LocalTime startTime = LocalTime.of(14, 0);
         LocalTime endTime = LocalTime.of(16, 0);
-        ScheduleCommand command = new ScheduleCommand(testName, testDay, startTime, endTime);
+        ScheduleCommand command = new ScheduleCommand(1, testDay, startTime, endTime);
 
         command.execute(students, ui);
         Lesson scheduledLesson = testStudent.getLessons().get(0);
@@ -45,47 +45,59 @@ public class ScheduleCommandTest {
     }
 
     @Test
-    public void execute_caseInsensitiveName_schedulesLessonSuccessfully() throws TutorSwiftException {
-        String testName = "Mickey Mouse";
-        Student testStudent = new Student(testName, "Secondary 3", "Physics");
-        students.addStudent(testStudent);
+    public void execute_multipleStudents_targetsCorrectStudent() throws TutorSwiftException {
+        Student alice = new Student("Alice", "Primary 3", "Math");
+        Student bob = new Student("Bob", "Secondary 3", "Physics");
+        students.addStudent(alice); // Index 1
+        students.addStudent(bob);   // Index 2
 
         DayOfWeek testDay = DayOfWeek.TUESDAY;
         LocalTime startTime = LocalTime.of(10, 0);
         LocalTime endTime = LocalTime.of(12, 0);
-        ScheduleCommand command = new ScheduleCommand("mickey mouse", testDay, startTime, endTime);
 
+        ScheduleCommand command = new ScheduleCommand(2, testDay, startTime, endTime);
         command.execute(students, ui);
-        Lesson scheduledLesson = testStudent.getLessons().get(0);
 
-        assertEquals(1, testStudent.getLessons().size());
-        assertEquals(testDay, scheduledLesson.getDay());
-        assertEquals(startTime, scheduledLesson.getStartTime());
-        assertEquals(endTime, scheduledLesson.getEndTime());
+        assertEquals(1, bob.getLessons().size());
+        assertEquals(0, alice.getLessons().size());
     }
 
     @Test
-    public void execute_studentNotFound_throwsTutorSwiftException() throws TutorSwiftException {
-        Student testStudent = new Student("Charlie", "JC 1", "Chemistry");
-        students.addStudent(testStudent);
-
-        String nonExistingStudentName = "David";
+    public void constructor_invalidIndexZero_throwsTutorSwiftException() {
         DayOfWeek testDay = DayOfWeek.WEDNESDAY;
         LocalTime startTime = LocalTime.of(9, 0);
         LocalTime endTime = LocalTime.of(11, 0);
-        ScheduleCommand command = new ScheduleCommand(nonExistingStudentName, testDay, startTime, endTime);
+
+        // Test that an index of 0 fails immediately in the constructor
+        TutorSwiftException exception = assertThrows(TutorSwiftException.class, () -> {
+            new ScheduleCommand(0, testDay, startTime, endTime);
+        });
+
+        assertEquals("Student index must be a positive non-zero number.", exception.getMessage());
+    }
+
+    @Test
+    public void execute_indexOutOfBounds_throwsTutorSwiftException() throws TutorSwiftException {
+        Student testStudent = new Student("Charlie", "JC 1", "Chemistry");
+        students.addStudent(testStudent); // List size is exactly 1
+
+        DayOfWeek testDay = DayOfWeek.WEDNESDAY;
+        LocalTime startTime = LocalTime.of(9, 0);
+        LocalTime endTime = LocalTime.of(11, 0);
+
+        // Target index 2, which does not exist
+        ScheduleCommand command = new ScheduleCommand(2, testDay, startTime, endTime);
 
         TutorSwiftException exception = assertThrows(TutorSwiftException.class, () -> {
             command.execute(students, ui);
         });
 
-        assertEquals("Student '" + nonExistingStudentName + "' not found.", exception.getMessage());
+        assertEquals("Invalid student index. Use list to view valid student indices.", exception.getMessage());
     }
 
     @Test
     public void execute_overlappingLesson_throwsTutorSwiftException() throws TutorSwiftException {
-        String testName = "Eve";
-        Student testStudent = new Student(testName, "Primary 5", "English");
+        Student testStudent = new Student("Eve", "Primary 5", "English");
         students.addStudent(testStudent);
 
         Lesson existingLesson = new Lesson(DayOfWeek.THURSDAY, LocalTime.of(15, 0), LocalTime.of(17, 0));
@@ -94,7 +106,7 @@ public class ScheduleCommandTest {
         DayOfWeek testDay = DayOfWeek.THURSDAY;
         LocalTime startTime = LocalTime.of(16, 0);
         LocalTime endTime = LocalTime.of(18, 0);
-        ScheduleCommand command = new ScheduleCommand(testName, testDay, startTime, endTime);
+        ScheduleCommand command = new ScheduleCommand(1, testDay, startTime, endTime);
 
         assertThrows(TutorSwiftException.class, () -> {
             command.execute(students, ui);

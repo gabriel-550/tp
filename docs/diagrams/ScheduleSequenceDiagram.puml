@@ -12,17 +12,10 @@ participant "ui:Ui" as Ui
 [-> ScheduleCommand : execute(students, ui)
 activate ScheduleCommand
 
-loop activeSize times
-    ScheduleCommand -> StudentList : getActiveStudent(i)
-    activate StudentList
-    StudentList --> ScheduleCommand : student
-    deactivate StudentList
-
-    ScheduleCommand -> Student : getName()
-    activate Student
-    Student --> ScheduleCommand : name
-    deactivate Student
-end
+ScheduleCommand -> StudentList : getActiveStudent(targetIndex - 1)
+activate StudentList
+StudentList --> ScheduleCommand : targetStudent
+deactivate StudentList
 
 create Lesson
 ScheduleCommand -> Lesson : Lesson(day, startTime, endTime)
