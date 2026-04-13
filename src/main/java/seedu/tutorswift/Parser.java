@@ -464,6 +464,9 @@ public class Parser {
         try {
             fee = Integer.parseInt(feeStr);
         } catch (NumberFormatException e) {
+            if (feeStr.matches("\\d+")) {
+                throw new TutorSwiftException("Fee amount is too large.");
+            }
             throw new TutorSwiftException("Fee must be a positive integer.");
         }
 
