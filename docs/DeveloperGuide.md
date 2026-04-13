@@ -858,7 +858,7 @@ Given below are instructions to test the app manually.
 
   Expected outcome: The system throws an error stating "Index must be a positive integer."
 
-- Test case: upcoming
+- Test case: `upcoming`
 
   Expected outcome: The UI displays a sorted list of all scheduled lessons for the next 7 days.
 

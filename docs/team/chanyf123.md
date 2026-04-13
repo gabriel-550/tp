@@ -1,7 +1,7 @@
 # Chan Yi Feng - Project Portfolio Page
 
 ## Overview
-TutorSwift is a desktop application used for private tutors to manage their students, schedule, and administrative records efficiently. The user interacts with it using a CLI. It is written in Java, and has about 6kLoC.
+TutorSwift is a specialised CLI-based management tool designed for private tutors who need to juggle multiple student profiles, lesson timings, and payment records on the fly. The user interacts with it using a CLI. It is written in Java, and has about 7kLoC.
 
 
 ### Summary of Contributions
@@ -10,14 +10,14 @@ TutorSwift is a desktop application used for private tutors to manage their stud
 
 * **Feature 1: Edit Student** 
     * *What it does:* Allows tutors to selectively modify an existing student's details (name, academic level, and/or subject) without needing to recreate the entire profile.
-    * *Justification:* Student details often change (e.g., advancing to a new academic level or switching subjects). This command provides a seamless way to update records while retaining their existing grades, fees, and schedules.
+    * *Justification:* Student details often change (e.g., advancing to a new academic level or switching subjects). This command provides a seamless way to update students' profile.
     * *Highlights:* This enhancement required designing a flexible parsing mechanism capable of handling any combination of optional prefixes (`n/`, `l/`, `sub/`). To ensure high cohesion and maintain encapsulation, the command logic delegates the actual state update and null-checking directly to the `Student` model, protecting the command layer from exposing the student's internal data structure.
   
 
 * **Feature 2: Schedule Lessons**
-    * *What it does:* Assigns a recurring weekly lesson slot (day of the week, start time, and end time) to a specific student in the active list.
+    * *What it does:* Assigns a recurring weekly lesson slot (day of the week, start time, and end time) to a specific student in the active list and prevents conflicting schedules.
     * *Justification:* Accurately tracking timetables is critical for tutors. This ensures they know exactly when a lesson occurs and acts as the foundation for the application's schedule-tracking features.
-    * *Highlights:* The technical challenge involved implementing robust time conflict validation to prevent double-booking. It required integrating Java's `LocalTime` and `DayOfWeek` APIs to build an internal `Lesson#isOverlapping()` logic. This logic accurately detects time interval collisions strictly for the specified student, while explicitly permitting overlaps across *different* students to allow for group-tuition scenarios.
+    * *Highlights:* This required integration with the `java.time` API. I implemented logic to ensure that while a single student cannot be double-booked, the system permits overlaps across different students to support group-tuition sessions.
 
 * **Feature 3: Upcoming Lessons List**
     * *What it does:* Displays a dynamically sorted list of all scheduled lessons across all students for the next 7 days, ordered chronologically.
@@ -26,6 +26,7 @@ TutorSwift is a desktop application used for private tutors to manage their stud
 
 * **Contributions to the User Guide (UG):**
     * Added documentation for the features `edit`, `schedule`, and `upcoming`.
+    * Included detailed "Notes about command format" to prevent user errors.
     * Standardised the formatting for the Command Summary table to improve readability.
 
 * **Contributions to the Developer Guide (DG):**
