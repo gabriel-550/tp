@@ -327,6 +327,8 @@ Format: `schedule INDEX day/DAY_OF_WEEK start/START_TIME end/END_TIME`
 
 - Removing lesson: To 'remove' a lesson, update it to the new correct timing. If a student stops having lessons entirely, you should archive the student, which automatically removes them from the list while preserving their history.
 
+- Lesson times must fall within the same calendar day (00:00 to 23:59). Overnight lessons that cross midnight are not currently supported.
+
 Examples of usage:
 
 - `schedule 1 day/Monday start/10:00 end/12:00` Schedules a 2-hour lesson for the 1st student in active list every Monday from 10:00 AM to 12:00 PM.
